@@ -38,8 +38,8 @@ public class Movie {
     @Column(name = "movie_end_date")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private Date endDate;
-    @Column(name = "movie_rating")
-    private float rating;
+    @Column(name = "movie_age_restriction")
+    private String ageRestriction;
     @Column(name = "movie_url_trailer")
     private String urlTrailer;
     @Column(name = "movie_status")

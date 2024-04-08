@@ -1,6 +1,7 @@
 package com.project.cinemamanagement.Controller;
 
 import com.project.cinemamanagement.Entity.Movie;
+import com.project.cinemamanagement.PayLoad.Response.MovieResponse;
 import com.project.cinemamanagement.Service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -52,4 +53,24 @@ public class MovieController {
             return new ResponseEntity<>(e.getMessage(),null,HttpStatus.NOT_FOUND);
         }
     }
+// Payload if needed
+//    @GetMapping("/payload")
+//    private ResponseEntity<?> getMovieList(){
+//        return new ResponseEntity<>(movieService.getMovieList(),null,HttpStatus.OK);
+//    }
+//
+//    @PutMapping("/payload/{movieId}")
+//    private ResponseEntity<?> updateMovieStatus(@PathVariable Long movieId, @RequestBody MovieResponse movieResponse){
+//        try{
+//            Movie updateMovie = movieService.getMovieById(movieId);
+//            updateMovie.setStatus(movieResponse.getStatus());
+//            updateMovie.setReleaseDate(movieResponse.getReleaseDate());
+//            updateMovie.setEndDate(movieResponse.getEndDate());
+//            updateMovie.setAgeRestriction(movieResponse.getAgeRestriction());
+//            return new ResponseEntity<>(movieService.updateMovie(movieId,updateMovie),null,HttpStatus.OK);
+//        }
+//        catch (Exception e){
+//            return new ResponseEntity<>(e.getMessage(),null,HttpStatus.NOT_FOUND);
+//        }
+//    }
 }
