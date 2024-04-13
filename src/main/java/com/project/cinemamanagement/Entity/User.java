@@ -31,11 +31,4 @@ public class User {
     @Column(name = "user_address")
     private String address;
 
-    @ManyToMany
-    @JoinTable(
-            name = "tbl_user_role",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id")
-    )
-    private Set<Role> role = new HashSet<>();
 }

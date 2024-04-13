@@ -24,7 +24,4 @@ public class Role {
     @Column(name = "role_description")
     private String  Description;
 
-    @ManyToMany(mappedBy = "role")
-    @Lazy
-    private Set<User> user = new HashSet<>();
 }
