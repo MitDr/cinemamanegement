@@ -50,12 +50,7 @@ public class UserController {
 
     @DeleteMapping("/{userId}")
     private ResponseEntity<?> deleteUser(@PathVariable Long userId){
-        try{
-            return new ResponseEntity<>(userService.deleteUser(userId),null,200);
-        }
-        catch (Exception e){
-            return new ResponseEntity<>(e.getMessage(),null,404);
-        }
+        return new ResponseEntity<>(userService.deleteUser(userId),null,200);
     }
     @GetMapping("/testing")
     public ResponseEntity<?> getAll(){

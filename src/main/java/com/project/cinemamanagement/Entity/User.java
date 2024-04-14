@@ -32,5 +32,9 @@ public class User {
     @Column(name = "user_address")
     private String address;
     @Column(name = "user_role")
+    @Enumerated(EnumType.STRING)
     private ROLE role = ROLE.USER;
+    @Column(name = "user_refresh_token")
+    private String refreshToken;
+
 }

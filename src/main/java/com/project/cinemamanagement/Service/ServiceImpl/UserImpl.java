@@ -3,6 +3,7 @@ package com.project.cinemamanagement.Service.ServiceImpl;
 import com.project.cinemamanagement.Entity.User;
 import com.project.cinemamanagement.Exception.DataFoundException;
 import com.project.cinemamanagement.Exception.DataNotFoundException;
+import com.project.cinemamanagement.PayLoad.Request.UserRequest;
 import com.project.cinemamanagement.Repository.UserRepository;
 import com.project.cinemamanagement.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +26,19 @@ public class UserImpl implements UserService {
     }
 
     @Override
-    public User addUser(User user) {
-        user.setPassWord(encoder.encode(user.getPassWord()));
+    public User addUser(UserRequest userRequest) {
+        User user = new User();
+        if (userRepository.existsByUserName(userRequest.getUserName())) {
+            throw new DataFoundException("User already exists");
+        }
+        else {
+            user.setUserName(userRequest.getUserName());
+            user.setFullName(userRequest.getFullName());
+            user.setPhone(userRequest.getPhone());
+            user.setEmail(userRequest.getEmail());
+            user.setAddress(userRequest.getAddress());
+            user.setPassWord(encoder.encode(userRequest.getPassWord()));
+        }
         return userRepository.save(user);
     }
 
