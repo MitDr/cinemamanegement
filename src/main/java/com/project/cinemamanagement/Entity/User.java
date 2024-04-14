@@ -1,5 +1,6 @@
 package com.project.cinemamanagement.Entity;
 
+import com.project.cinemamanagement.Enum.ROLE;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,5 +31,6 @@ public class User {
     private String phone;
     @Column(name = "user_address")
     private String address;
-
+    @Column(name = "user_role")
+    private ROLE role = ROLE.USER;
 }

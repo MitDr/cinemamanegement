@@ -6,6 +6,7 @@ import com.project.cinemamanagement.Exception.DataNotFoundException;
 import com.project.cinemamanagement.Repository.UserRepository;
 import com.project.cinemamanagement.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,7 +14,10 @@ import java.util.List;
 @Service
 public class UserImpl implements UserService {
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder encoder;
 
     @Override
     public List<User> getAllUser() {
@@ -22,6 +26,7 @@ public class UserImpl implements UserService {
 
     @Override
     public User addUser(User user) {
+        user.setPassWord(encoder.encode(user.getPassWord()));
         return userRepository.save(user);
     }
 

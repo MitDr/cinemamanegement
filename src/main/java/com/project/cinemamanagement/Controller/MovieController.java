@@ -6,6 +6,8 @@ import com.project.cinemamanagement.Service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -15,12 +17,13 @@ public class MovieController {
     private MovieService movieService;
 
     @GetMapping
-    private ResponseEntity<?> getAllMovie(){
+    @PreAuthorize("hasAuthority('USER')")
+    public ResponseEntity<?> getAllMovie(){
         return new ResponseEntity<>(movieService.getAllMovie(),null,200);
     }
 
     @GetMapping("/{movieId}")
-    private ResponseEntity<?> getMovieById(@PathVariable Long movieId){
+    public ResponseEntity<?> getMovieById(@PathVariable Long movieId){
         try{
             return new ResponseEntity<>(movieService.getMovieById(movieId),null, HttpStatus.OK);
         }
@@ -30,7 +33,8 @@ public class MovieController {
     }
 
     @PostMapping
-    private ResponseEntity<?> addMovie(@RequestBody Movie movie){
+    @PreAuthorize("hasAuthority('USER')")
+    public ResponseEntity<?> addMovie(@RequestBody Movie movie){
         return new ResponseEntity<>(movieService.addMovie(movie),null,HttpStatus.CREATED);
     }
 
