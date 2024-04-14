@@ -16,6 +16,7 @@ public class MovieController {
     @Autowired
     private MovieService movieService;
 
+
     @GetMapping
     @PreAuthorize("hasAuthority('USER')")
     public ResponseEntity<?> getAllMovie(){

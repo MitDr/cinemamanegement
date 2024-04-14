@@ -1,6 +1,7 @@
 package com.project.cinemamanagement.Controller;
 
 import com.project.cinemamanagement.Entity.User;
+import com.project.cinemamanagement.MyResponse.MyResponse;
 import com.project.cinemamanagement.PayLoad.Request.AuthRequest;
 import com.project.cinemamanagement.Service.JwtService;
 import com.project.cinemamanagement.Service.UserService;
@@ -20,13 +21,13 @@ public class UserController {
     private UserService userService;
 
     @GetMapping
-    @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<?> getAllUser(){
-        return new ResponseEntity<>(userService.getAllUser(),null,200);
+    @PreAuthorize("hasAuthority('USER')")
+    public ResponseEntity<MyResponse> getAllUser(){
+        return new ResponseEntity<>(new MyResponse(userService.getAllUser(),"All user",200),null,200);
     }
 
     @GetMapping("/{userId}")
-    @PreAuthorize("hasAuthority('USER')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> getUserById(@PathVariable Long userId){
         try
         {
@@ -39,7 +40,8 @@ public class UserController {
     }
 
     @PutMapping("/{userId}")
-    private ResponseEntity<?> updateUser(@PathVariable Long userId, @RequestBody User user){
+    @PreAuthorize("hasAuthority('USER')")
+    public ResponseEntity<?> updateUser(@PathVariable Long userId, @RequestBody User user){
         try{
             return new ResponseEntity<>(userService.updateUser(userId,user),null,200);
         }
