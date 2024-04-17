@@ -2,13 +2,17 @@ package com.project.cinemamanagement.Controller;
 
 import com.project.cinemamanagement.Exception.DataFoundException;
 import com.project.cinemamanagement.Exception.DataNotFoundException;
+import com.project.cinemamanagement.Exception.DataRequiredException;
 import com.project.cinemamanagement.MyResponse.ErrorResponse;
 import com.project.cinemamanagement.MyResponse.MyResponse;
+import lombok.val;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -29,32 +33,33 @@ public class RestResponseEntityExceptionHandler{
 
     @ExceptionHandler(DataFoundException.class)
     @ResponseStatus(value = HttpStatus.CONFLICT)
-    public MyResponse handleDataFoundException(DataFoundException ex, WebRequest request) {
-        return new MyResponse(null, ex.getMessage(), HttpStatus.CONFLICT.value());
+    public ResponseEntity<ErrorResponse> handleDataFoundException(DataFoundException ex) {
+        return new ResponseEntity<ErrorResponse>(new ErrorResponse(ex.getMessage(),HttpStatus.CONFLICT.value()),null, HttpStatus.CONFLICT);
     }
 
-    @ExceptionHandler(DataNotFoundException.class)
-    @ResponseStatus(value = HttpStatus.NOT_FOUND)
-    public MyResponse handleDataNotFoundException(DataFoundException ex, WebRequest request) {
-        return new MyResponse(null, ex.getMessage(), HttpStatus.NOT_FOUND.value());
-    }
-
-//    @ExceptionHandler(MethodArgumentNotValidException.class)
-//    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
-//    public MyResponse handleValidationExceptions(MethodArgumentNotValidException ex) {
-//        String exception = "";
-//        List<String> errors = ex.getBindingResult()
-//                .getFieldErrors()
-//                .stream()
-//                .map(FieldError::getDefaultMessage)
-//                .collect(Collectors.toList());
-//        for(String error : errors) {
-//            exception = exception + ", \n" + error;
-//        }
-//        return new MyResponse(null, exception, HttpStatus.BAD_REQUEST.value());
+//    @ExceptionHandler(UsernameNotFoundException.class)
+//    public ResponseEntity<ErrorResponse> handleUserNotFoundException(UsernameNotFoundException ex){
+//        return new ResponseEntity<ErrorResponse>(new ErrorResponse(ex.getMessage(),HttpStatus.BAD_REQUEST.value()),null,HttpStatus.BAD_REQUEST);
 //    }
+    @ExceptionHandler({DataNotFoundException.class})
+    @ResponseStatus(value = HttpStatus.NOT_FOUND)
+    public ResponseEntity<ErrorResponse> handleDataNotFoundException(DataNotFoundException ex) {
+        return new ResponseEntity<ErrorResponse>(new ErrorResponse(ex.getMessage(),HttpStatus.NOT_FOUND.value()),null,HttpStatus.NOT_FOUND);
+    }
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ExceptionHandler({DataRequiredException.class})
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    public ResponseEntity<ErrorResponse> handleDataRequiredException(DataRequiredException ex) {
+        return new ResponseEntity<ErrorResponse>(new ErrorResponse(ex.getMessage(),HttpStatus.BAD_REQUEST.value()),null,HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler({BadCredentialsException.class})
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    public ResponseEntity<ErrorResponse> handleBadCredentialsException(BadCredentialsException ex){
+        return new ResponseEntity<ErrorResponse>(new ErrorResponse(ex.getMessage(),HttpStatus.BAD_REQUEST.value()),null, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler({MethodArgumentNotValidException.class})
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     public ResponseEntity<ErrorResponse> handleValidationExceptions(MethodArgumentNotValidException ex) {
         Map<String, List<String>> body = new HashMap<>();

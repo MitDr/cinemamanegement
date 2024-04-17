@@ -1,6 +1,7 @@
 package com.project.cinemamanagement.Config;
 
 import com.project.cinemamanagement.Filter.JwtAuthFilter;
+import com.project.cinemamanagement.Provider.CustomAuthentication;
 import com.project.cinemamanagement.Repository.UserRepository;
 import com.project.cinemamanagement.Service.ServiceImpl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,9 @@ public class SecurityConfig {
     @Autowired
     private JwtAuthFilter authFilter;
 
+    @Autowired
+    private CustomAuthentication customAuthentication;
+
     @Bean
     public UserDetailsService userDetailsService(){
         return new UserServiceImpl();
@@ -38,7 +42,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         return http.csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(auth -> auth.requestMatchers("/api/v1/auth/addNewUser").permitAll())
+                .authorizeHttpRequests(auth -> auth.requestMatchers("/api/v1/auth/register").permitAll())
                 .authorizeHttpRequests(auth->auth.requestMatchers("/api/v1/auth/login").permitAll())
                 .authorizeHttpRequests(auth -> auth.anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
