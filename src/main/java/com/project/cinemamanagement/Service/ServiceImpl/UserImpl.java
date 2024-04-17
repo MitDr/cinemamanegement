@@ -67,4 +67,23 @@ public class UserImpl implements UserService {
         userRepository.delete(deleteUser);
         return deleteUser;
     }
+
+    @Override
+    public void saveRefreshToken(String userName, String refreshToken) {
+        User user = userRepository.findByUserName(userName);
+        user.setRefreshToken(refreshToken);
+        userRepository.save(user);
+    }
+
+    @Override
+    public User getUserByRefreshToken(String refreshToken) {
+        return userRepository.findByRefreshToken(refreshToken);
+    }
+
+    @Override
+    public void deleteRefreshToken(String refreshToken) {
+        User user = userRepository.findByRefreshToken(refreshToken);
+        user.setRefreshToken(null);
+        userRepository.save(user);
+    }
 }

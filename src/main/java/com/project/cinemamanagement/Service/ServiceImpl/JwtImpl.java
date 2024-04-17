@@ -34,11 +34,12 @@ public class JwtImpl implements JwtService {
 
     @Override
     public String creatRefreshToken(Map<String, Object> claims, String userName) {
+        long expirationTimeMillis = System.currentTimeMillis() + (1000L * 3600 * 24 * 10 * 10);
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(userName)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + (1000 * 3600 * 24 * 10) ))
+                .setExpiration(new Date(expirationTimeMillis))
                 .signWith(getSignKey(), SignatureAlgorithm.HS256).compact();
     }
 

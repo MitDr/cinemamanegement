@@ -15,4 +15,9 @@ public interface UserService {
     User updateUser(Long userId, User user);
 
     User deleteUser(Long userId);
+    void saveRefreshToken(String userName, String refreshToken);
+
+    User getUserByRefreshToken(String refreshToken);
+
+    void deleteRefreshToken(String refreshToken);
 }
