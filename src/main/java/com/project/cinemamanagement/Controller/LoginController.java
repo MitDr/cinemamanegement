@@ -3,6 +3,7 @@ package com.project.cinemamanagement.Controller;
 
 import com.project.cinemamanagement.Entity.User;
 import com.project.cinemamanagement.MyResponse.MyResponse;
+import com.project.cinemamanagement.MyResponse.TokenResponse;
 import com.project.cinemamanagement.PayLoad.Request.AuthRequest;
 import com.project.cinemamanagement.PayLoad.Request.UserRequest;
 import com.project.cinemamanagement.Provider.CustomAuthentication;
@@ -34,21 +35,22 @@ public class LoginController {
     private CustomAuthentication authenticationManager;
 
     @PostMapping("/login")
-    private ResponseEntity<MyResponse> authenticateAndGetToken(@Valid @RequestBody AuthRequest authRequest) throws Exception{
+    private ResponseEntity<TokenResponse> authenticateAndGetToken(@Valid @RequestBody AuthRequest authRequest) throws Exception{
         Authentication authentication;
         try{
-            System.out.println("debug");
             authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(),authRequest.getPassword()));
         }
         catch (AuthenticationException e){
             throw new Exception("Invalid user or password",e);
         }
         if(authentication.isAuthenticated()){
-            System.out.println("debug2");
-            return new ResponseEntity<MyResponse>(new MyResponse(jwtService.generateToken(authRequest.getUsername()),"login sucessfully"),HttpStatus.OK);
+            String accessToken = jwtService.generateToken(authRequest.getUsername());
+            String refreshToken = jwtService.generateRefreshToken(authRequest.getUsername());
+//            jwtService.saveRefreshToken(authRequest.getUsername(),refreshToken);
+            return new ResponseEntity<TokenResponse>(new TokenResponse(accessToken,refreshToken,"login sucessfully"),HttpStatus.OK);
         }
         else {
-            throw new Exception("IDK");
+            throw new Exception("SOMEHOWITISUNAUTHORIZE");
         }
     }
 

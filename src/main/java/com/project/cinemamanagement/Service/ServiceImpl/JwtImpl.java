@@ -27,6 +27,22 @@ public class JwtImpl implements JwtService {
     }
 
     @Override
+    public String generateRefreshToken(String userName) {
+        Map<String, Object> claims = new HashMap<>();
+        return creatRefreshToken(claims, userName);
+    }
+
+    @Override
+    public String creatRefreshToken(Map<String, Object> claims, String userName) {
+        return Jwts.builder()
+                .setClaims(claims)
+                .setSubject(userName)
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + (1000 * 3600 * 24 * 10) ))
+                .signWith(getSignKey(), SignatureAlgorithm.HS256).compact();
+    }
+
+    @Override
     public String createToken(Map<String, Object> claims, String userName) {
         return Jwts.builder()
                 .setClaims(claims)

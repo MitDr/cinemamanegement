@@ -12,6 +12,10 @@ public interface JwtService {
 
     String generateToken(String userName);
 
+    String generateRefreshToken(String userName);
+
+    String creatRefreshToken(Map<String, Object> claims, String userName);
+
     String createToken(Map<String, Object> claims, String userName);
 
     Key getSignKey();
