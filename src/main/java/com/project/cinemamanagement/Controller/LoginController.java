@@ -19,17 +19,21 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.Map;
 
+@CrossOrigin(origins = "http://localhost:63342")
 @RestController
 @RequestMapping("/api/v1/auth")
-@CrossOrigin
 public class LoginController {
     @Autowired
     private UserService userService;
@@ -37,7 +41,6 @@ public class LoginController {
     private JwtService jwtService;
     @Autowired
     private CustomAuthentication authenticationManager;
-
     @PostMapping("/login")
     private ResponseEntity<TokenResponse> authenticateAndGetToken(@Valid @RequestBody AuthRequest authRequest) throws Exception{
         Authentication authentication;
@@ -51,7 +54,7 @@ public class LoginController {
             String accessToken = jwtService.generateToken(authRequest.getUsername());
             String refreshToken = jwtService.generateRefreshToken(authRequest.getUsername());
             userService.saveRefreshToken(authRequest.getUsername(),refreshToken);
-            return new ResponseEntity<TokenResponse>(new TokenResponse(accessToken,refreshToken,"login sucessfully"),HttpStatus.OK);
+            return new ResponseEntity<TokenResponse>(new TokenResponse(accessToken,refreshToken,"hello!!" + authRequest.getUsername()),HttpStatus.OK);
         }
         else {
             throw new Exception("SOMEHOWITISUNAUTHORIZE");

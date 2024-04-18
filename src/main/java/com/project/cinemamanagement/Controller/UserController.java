@@ -22,7 +22,7 @@ public class UserController {
     private UserService userService;
 
     @GetMapping
-    @PreAuthorize("hasAuthority('USER')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<MyResponse> getAllUser(){
         return new ResponseEntity<>(new MyResponse(userService.getAllUser(),"All user is get"),null,200);
     }

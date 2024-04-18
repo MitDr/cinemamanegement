@@ -19,6 +19,7 @@ import java.util.function.Function;
 @Service
 public class JwtImpl implements JwtService {
     public static final String SECRET = "d02770da9c9adc56ef54bb75bfe64914dbd55eae33f71801e494cdaaae3bae7a";
+    public static final String SECRETREF = "ce93b12b7c6fb45bd208cd744f1c27852eb4f252e768b0ecbe9a649f5846ae98";
 
     @Override
     public String generateToken(String userName) {
@@ -40,7 +41,7 @@ public class JwtImpl implements JwtService {
                 .setSubject(userName)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(expirationTimeMillis))
-                .signWith(getSignKey(), SignatureAlgorithm.HS256).compact();
+                .signWith(getRefreshSignKey(), SignatureAlgorithm.HS256).compact();
     }
 
     @Override
@@ -56,6 +57,10 @@ public class JwtImpl implements JwtService {
     @Override
     public Key getSignKey() {
         byte[] keyBytes = Decoders.BASE64.decode(SECRET);
+        return Keys.hmacShaKeyFor(keyBytes);
+    }
+    public Key getRefreshSignKey() {
+        byte[] keyBytes = Decoders.BASE64.decode(SECRETREF);
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
