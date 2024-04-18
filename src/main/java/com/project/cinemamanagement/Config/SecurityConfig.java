@@ -49,10 +49,6 @@ import static org.springframework.security.config.Customizer.withDefaults;
 public class SecurityConfig {
     @Autowired
     private JwtAuthFilter authFilter;
-
-    @Autowired
-    @Lazy
-    private UserService userService;
     @Autowired
     @Lazy
     private CustomAuthentication customAuthentication;
@@ -67,11 +63,9 @@ public class SecurityConfig {
         return http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth.requestMatchers("/api/v1/auth/register").permitAll())
                 .authorizeHttpRequests(auth->auth.requestMatchers("/api/v1/auth/login").permitAll())
-                .authorizeHttpRequests(auth->auth.requestMatchers("/error", "/webjars/**").permitAll())
                 .authorizeHttpRequests(auth->auth.requestMatchers("/api/v1/auth/refresh").permitAll())
                 .authorizeHttpRequests(auth->auth.requestMatchers("/api/v1/auth/logout").permitAll())
                 .authorizeHttpRequests(auth->auth.requestMatchers("/api/v1/auth/refresh").permitAll())
-                .authorizeHttpRequests(auth->auth.requestMatchers("api/v1/auth/test").permitAll())
                 .authorizeHttpRequests(auth -> auth.anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider())
