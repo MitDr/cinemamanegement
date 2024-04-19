@@ -37,7 +37,7 @@ public class TicketImpl implements TicketService {
             Ticket newTicket = new Ticket();
             newTicket.setShowTime(showtime);
             newTicket.setUser(user);
-            newTicket.setPrice(ticket.getPrice());
+            newTicket.setPrice(price);
             newTicket.setDate(ticket.getDate());
             newTicket.setSeatLocation(s);
             ticketRepository.save(newTicket);
@@ -86,6 +86,17 @@ public class TicketImpl implements TicketService {
         List<TicketResponse> ticketResponses = new ArrayList<>();
         for (Ticket t: ticket) {
             ticketResponses.add(new TicketResponse(t.getIdTicket(), t.getPrice(), t.getSeatLocation(), t.getDate(), t.getShowTime().getShowTimeId(), t.getUser().getUserId()));
+        }
+        return ticketResponses;
+    }
+
+    @Override
+    public List<TicketResponse> getTicketByUserId(Long userId) {
+        List<Ticket> ticket = ticketRepository.findAllByUser_UserId(userId);
+        List<TicketResponse> ticketResponses = new ArrayList<>();
+        for (Ticket t: ticket) {
+            TicketResponse temp = new TicketResponse(t.getIdTicket(), t.getPrice(), t.getSeatLocation(), t.getDate(), t.getShowTime().getShowTimeId(), t.getUser().getUserId());
+            ticketResponses.add(temp);
         }
         return ticketResponses;
     }

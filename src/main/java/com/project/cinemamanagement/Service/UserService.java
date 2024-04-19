@@ -3,6 +3,7 @@ package com.project.cinemamanagement.Service;
 import com.project.cinemamanagement.Entity.User;
 import com.project.cinemamanagement.PayLoad.Request.UserRequest;
 import com.project.cinemamanagement.PayLoad.Response.UserResponse;
+import com.project.cinemamanagement.PayLoad.Response.UserTicketResponse;
 
 import java.util.List;
 
@@ -22,4 +23,5 @@ public interface UserService {
 
     void deleteRefreshToken(String refreshToken);
     User getUserByUserName(String userName);
+    UserTicketResponse getUserTicketByUserName(Long userId);
 }

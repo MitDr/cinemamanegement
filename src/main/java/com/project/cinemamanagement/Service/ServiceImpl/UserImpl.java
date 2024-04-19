@@ -6,7 +6,9 @@ import com.project.cinemamanagement.Exception.DataNotFoundException;
 import com.project.cinemamanagement.PayLoad.Request.UserRequest;
 import com.project.cinemamanagement.PayLoad.Response.TicketResponse;
 import com.project.cinemamanagement.PayLoad.Response.UserResponse;
+import com.project.cinemamanagement.PayLoad.Response.UserTicketResponse;
 import com.project.cinemamanagement.Repository.UserRepository;
+import com.project.cinemamanagement.Service.TicketService;
 import com.project.cinemamanagement.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,7 +21,8 @@ import java.util.List;
 public class UserImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
-
+    @Autowired
+    private TicketService ticketService;
     @Autowired
     private PasswordEncoder encoder;
 
@@ -101,5 +104,13 @@ public class UserImpl implements UserService {
     @Override
     public User getUserByUserName(String userName) {
         return userRepository.findByUserName(userName);
+    }
+
+    @Override
+    public UserTicketResponse getUserTicketByUserName(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new DataNotFoundException("User not found"));
+        List<TicketResponse> ticketResponses;
+        ticketResponses = ticketService.getTicketByUserId(userId);
+        return new UserTicketResponse(user.getUserName(), user.getFullName(), user.getEmail(), user.getPhone(), user.getAddress(), ticketResponses);
     }
 }

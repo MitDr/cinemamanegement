@@ -11,11 +11,11 @@ public class EmailController {
     @Autowired
     private EmailService emailService;
 
-    @GetMapping("/send-email")
-    public String sendEmail() {
-        // Thay thế địa chỉ email của người nhận và nội dung email ở đây
-        emailService.sendEmail("ttlong1301@gmail.com", "Test Email", "This is a test email.");
-
-        return "Email sent successfully!";
-    }
+//    @GetMapping("/send-email")
+//    public String sendEmail() {
+//        // Thay thế địa chỉ email của người nhận và nội dung email ở đây
+//        emailService.sendEmail("ttlong1301@gmail.com", "Test Email", "This is a test email.");
+//
+//        return "Email sent successfully!";
+//    }
 }

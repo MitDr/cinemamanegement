@@ -115,6 +115,9 @@ public class SeatImpl implements SeatService {
     public List<SeatResponse> getUntakenSeat(Long showtimeId) {
         Specification<Seat> spec = SeatSpecifications.getUntakenSeat(showtimeId);
         List<Seat> seatList = seatRepository.findAll(spec);
+        if(seatList.isEmpty()){
+            throw new DataNotFoundException("There are no seats");
+        }
         List<SeatResponse> seatResponseList = new ArrayList<>();
         for (Seat seat: seatList) {
             SeatResponse seatResponse = new SeatResponse();

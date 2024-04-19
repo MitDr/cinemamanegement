@@ -16,5 +16,5 @@ public interface TicketService {
 
     List<TicketResponse> getAllTicket();
 
-
+    List<TicketResponse> getTicketByUserId(Long userId);
 }

@@ -5,6 +5,7 @@ import com.project.cinemamanagement.PayLoad.Request.SeatRequest;
 import com.project.cinemamanagement.Service.SeatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -14,19 +15,23 @@ public class SeatController {
     SeatService seatService;
 
     @GetMapping
+    @PreAuthorize("hasAuthority('ADMIN')")
     private ResponseEntity<MyResponse> getAllSeat(){
         return new ResponseEntity<MyResponse>(new MyResponse(seatService.getAllSeat(),"Get all seat"),null,200);
     }
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     private ResponseEntity<MyResponse> getSeatById(Long id){
         return new ResponseEntity<MyResponse>(new MyResponse(seatService.getSeatById(id),"Seat with id: "+" "+id+" is get"),null,200);
     }
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     private ResponseEntity<MyResponse> deleteSeat(Long id){
         seatService.deleteSeat(id);
         return new ResponseEntity<MyResponse>(new MyResponse(null,"Delete seat successfully"),null,200);
     }
     @PostMapping
+    @PreAuthorize("hasAuthority('ADMIN')")
     private ResponseEntity<MyResponse> addSeat(@RequestBody SeatRequest seatRequest){
         seatService.addSeat(seatRequest);
         return new ResponseEntity<MyResponse>(new MyResponse(null,"Add new seat successfully"),null,200);
