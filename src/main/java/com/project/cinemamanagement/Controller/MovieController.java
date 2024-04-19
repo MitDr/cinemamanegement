@@ -19,6 +19,7 @@ public class MovieController {
 
 
     @GetMapping
+
 //    @PreAuthorize("hasAuthority('USER')")
     public ResponseEntity<MyResponse> getAllMovie(){
         return new ResponseEntity<MyResponse>(new MyResponse(movieService.getAllMovie(),null),null,200);

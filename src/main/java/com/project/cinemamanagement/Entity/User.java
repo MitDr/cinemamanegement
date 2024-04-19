@@ -38,8 +38,6 @@ public class User {
     private ROLE role = ROLE.USER;
     @Column(name = "user_refresh_token")
     private String refreshToken;
-
     @OneToMany(mappedBy = "user")
     private List<Ticket> ticket = new ArrayList<>();
-
 }
