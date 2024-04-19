@@ -6,6 +6,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 @Entity
 @Data
 @Table(name = "tbl_user")
@@ -33,4 +38,6 @@ public class User {
     private ROLE role = ROLE.USER;
     @Column(name = "user_refresh_token")
     private String refreshToken;
+    @OneToMany(mappedBy = "user")
+    private List<Ticket> ticket = new ArrayList<>();
 }
