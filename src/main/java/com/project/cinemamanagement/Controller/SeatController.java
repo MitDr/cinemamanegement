@@ -59,4 +59,22 @@ public class SeatController {
             return new ResponseEntity<MyResponse>(new MyResponse(e.getMessage(),null),null,404);
         }
     }
+    @GetMapping("showtime/allseat/{id}")
+    private ResponseEntity<MyResponse> getSeatByShowtimeId(@PathVariable Long id){
+        try{
+            return new ResponseEntity<MyResponse>(new MyResponse(seatService.getAllSeatbyShowtimeId(id),null),null,200);
+        }
+        catch (Exception e){
+            return new ResponseEntity<MyResponse>(new MyResponse(e.getMessage(),null),null,404);
+        }
+    }
+    @GetMapping("showtime/untakenseat/{id}")
+    private ResponseEntity<MyResponse> getUntakenSeat(@PathVariable Long id){
+        try{
+            return new ResponseEntity<MyResponse>(new MyResponse(seatService.getUntakenSeat(id),null),null,200);
+        }
+        catch (Exception e){
+            return new ResponseEntity<MyResponse>(new MyResponse(e.getMessage(),null),null,404);
+        }
+    }
 }

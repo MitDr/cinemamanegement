@@ -4,10 +4,7 @@ import com.project.cinemamanagement.Entity.Room;
 import com.project.cinemamanagement.Entity.Seat;
 import com.project.cinemamanagement.Entity.ShowTime;
 import com.project.cinemamanagement.Entity.Ticket;
-import jakarta.persistence.criteria.Join;
-import jakarta.persistence.criteria.Predicate;
-import jakarta.persistence.criteria.Root;
-import jakarta.persistence.criteria.Subquery;
+import jakarta.persistence.criteria.*;
 import org.springframework.data.jpa.domain.Specification;
 
 public class SeatSpecifications {
@@ -20,18 +17,29 @@ public class SeatSpecifications {
 
     public static Specification<Seat> getUntakenSeat(Long showtimeId){
         return ((root, query, criteriaBuilder) -> {
+            Join<Seat, Room> roomJoin = root.join("room");
+            Join<Room, ShowTime> showtimeJoin = roomJoin.join("showTime");
 
-            Join<Seat,Room> roomJoin = root.join("room");
-            Join<Room, ShowTime> showtimeJoin = root.join("showtime");
-            Join<ShowTime, Ticket> ticketJoin = root.join("ticket");
-            Predicate showtimePredicate = criteriaBuilder.equal(showtimeJoin.get("idTicket"), showtimeId);
+            Subquery<String> subquery = query.subquery(String.class);
+            Root<ShowTime> subRoot = subquery.from(ShowTime.class);
+            Join<ShowTime, Ticket> ticketJoin = subRoot.join("ticket");
 
-            Subquery <String> subquery = query.subquery(String.class);
-            Root<Ticket> ticketSubqueryRoot = subquery.from(Ticket.class);
-            subquery.select(ticketSubqueryRoot.get("seatLocation")).where(criteriaBuilder.equal(ticketSubqueryRoot.get("showTime"), showtimeJoin.get("idTicket")));
-            Predicate seatNotInTicketPredicate = criteriaBuilder.not(root.get("seatNumber").in(subquery));
+            subquery.select(ticketJoin.get("seatLocation"))
+                    .where(criteriaBuilder.equal(subRoot.get("showTimeId"), showtimeId));
 
-            Predicate finalPredicate = criteriaBuilder.and(showtimePredicate, seatNotInTicketPredicate);
+            Predicate finalPredicate = criteriaBuilder.not(root.get("seatNumber").in(subquery));
+
+            return finalPredicate;
+        });
+    }
+    public static Specification<Seat> getAllSeatbyShowtimeId(Long showtimeId){
+        return ((root, query, criteriaBuilder) -> {
+            Join<Seat, Room> roomJoin = root.join("room");
+            Join<Room, ShowTime> showtimeJoin = roomJoin.join("showTime");
+
+            Predicate showtimePredicate = criteriaBuilder.equal(showtimeJoin.get("showTimeId"), showtimeId);
+
+            Predicate finalPredicate = criteriaBuilder.and(showtimePredicate);
 
             return finalPredicate;
         });

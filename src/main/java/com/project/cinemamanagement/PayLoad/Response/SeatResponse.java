@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 public class SeatResponse {
     private Long SeatId;
     private int SeatStatus;
-    private int SeatNumber;
+    private String SeatNumber;
     private String SeatType;
 }

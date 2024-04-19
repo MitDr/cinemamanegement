@@ -21,6 +21,10 @@ public class Room {
     private int seatQuantity;
     @Column(name = "roomType")
     private String roomType;
+
+    @OneToMany(mappedBy = "room")
+    private List<ShowTime> showTime;
+
     @OneToMany(mappedBy = "room")
     private List<Seat> Seat;
 

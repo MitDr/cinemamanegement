@@ -20,7 +20,7 @@ public class Seat {
     @Column(name = "seatStatus")
     private int seatStatus;
     @Column(name = "seatNumber")
-    private int seatNumber;
+    private String seatNumber;
     @Column(name = "seatType")
     private String seatType;
     @ManyToOne

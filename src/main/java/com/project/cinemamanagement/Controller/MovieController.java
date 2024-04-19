@@ -36,7 +36,7 @@ public class MovieController {
     }
 
     @PostMapping
-    @PreAuthorize("hasAuthority('USER')")
+//    @PreAuthorize("hasAuthority('USER')")
     public ResponseEntity<MyResponse> addMovie(@RequestBody Movie movie){
         return new ResponseEntity<MyResponse>(new MyResponse(movieService.addMovie(movie),null),null,HttpStatus.CREATED);
     }

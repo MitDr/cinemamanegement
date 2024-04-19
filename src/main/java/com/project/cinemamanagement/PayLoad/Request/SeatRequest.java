@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class SeatRequest {
     private int SeatStatus;
-    private int SeatNumber;
+    private String SeatNumber;
     private String SeatType;
 
     private Long RoomId;
