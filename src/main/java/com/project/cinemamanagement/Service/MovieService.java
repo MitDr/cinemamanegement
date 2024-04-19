@@ -1,7 +1,6 @@
 package com.project.cinemamanagement.Service;
 
 import com.project.cinemamanagement.Entity.Movie;
-import com.project.cinemamanagement.PayLoad.Request.MovieRequest;
 
 import java.util.List;
 

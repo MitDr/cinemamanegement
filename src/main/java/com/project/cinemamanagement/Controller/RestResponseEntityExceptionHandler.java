@@ -37,10 +37,6 @@ public class RestResponseEntityExceptionHandler{
         return new ResponseEntity<ErrorResponse>(new ErrorResponse(ex.getMessage(),HttpStatus.CONFLICT.value()),null, HttpStatus.CONFLICT);
     }
 
-//    @ExceptionHandler(UsernameNotFoundException.class)
-//    public ResponseEntity<ErrorResponse> handleUserNotFoundException(UsernameNotFoundException ex){
-//        return new ResponseEntity<ErrorResponse>(new ErrorResponse(ex.getMessage(),HttpStatus.BAD_REQUEST.value()),null,HttpStatus.BAD_REQUEST);
-//    }
     @ExceptionHandler({DataNotFoundException.class})
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
     public ResponseEntity<ErrorResponse> handleDataNotFoundException(DataNotFoundException ex) {
@@ -68,7 +64,6 @@ public class RestResponseEntityExceptionHandler{
                 .stream()
                 .map(FieldError::getDefaultMessage)
                 .collect(Collectors.toList());
-        //body.put("errors", errors);
         return ResponseEntity.badRequest().body(new ErrorResponse(errors, HttpStatus.BAD_REQUEST.value()));
     }
 }

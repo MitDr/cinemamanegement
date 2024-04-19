@@ -30,6 +30,7 @@ public class TicketImpl implements TicketService {
     public List<TicketResponse> addTicket(TicketRequest ticket) {
         String[] location = ticket.getSeatLocation();
         List<TicketResponse> ticketResponses = new ArrayList<>();
+        Long price = ticket.getPrice()/location.length;
         for (String s : location) {
             ShowTime showtime = showTimeRepository.findById(ticket.getShowtimeId()).orElseThrow(() -> new DataNotFoundException("Showtime not found"));
             User user = userRepository.findById(ticket.getUserId()).orElseThrow(() -> new DataNotFoundException("User not found"));
