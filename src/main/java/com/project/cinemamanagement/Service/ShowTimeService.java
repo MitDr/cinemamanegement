@@ -2,18 +2,20 @@ package com.project.cinemamanagement.Service;
 
 import com.project.cinemamanagement.Entity.Movie;
 import com.project.cinemamanagement.Entity.ShowTime;
+import com.project.cinemamanagement.PayLoad.Request.ShowtimeRequest;
+import com.project.cinemamanagement.PayLoad.Response.ShowtimeResponse;
 
 import java.util.List;
 
 public interface ShowTimeService {
 
-    ShowTime addShowTime(ShowTime showTime);
+    ShowtimeResponse addShowTime(ShowtimeRequest showTime);
 
-    ShowTime getShowTimeById(Long showTimeId);
+    ShowtimeResponse getShowTimeById(Long showTimeId);
 
-    ShowTime deleteShowTime(Long showTimeId);
+    ShowtimeResponse deleteShowTime(Long showTimeId);
 
-    ShowTime updateShowTime(Long showTimeId, ShowTime showTime);
-    List<ShowTime> getAllShowTime();
-    List<ShowTime> getShowTimeByMovieId(Long movie);
+    ShowtimeResponse updateShowTime(Long showTimeId, ShowtimeRequest showTime);
+    List<ShowtimeResponse> getAllShowTime();
+    List<ShowtimeResponse> getShowTimeByMovieId(Long movie);
 }

@@ -2,6 +2,9 @@ package com.project.cinemamanagement.Controller;
 
 import com.project.cinemamanagement.Entity.Movie;
 import com.project.cinemamanagement.Entity.ShowTime;
+import com.project.cinemamanagement.MyResponse.MyResponse;
+import com.project.cinemamanagement.PayLoad.Request.ShowtimeRequest;
+import com.project.cinemamanagement.PayLoad.Response.ShowtimeResponse;
 import com.project.cinemamanagement.Service.MovieService;
 import com.project.cinemamanagement.Service.ShowTimeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,58 +18,59 @@ public class ShowTimeController {
     private ShowTimeService showTimeService;
 
     @GetMapping
-    private ResponseEntity<?> getAllShowTime(){
-        return new ResponseEntity<>(showTimeService.getAllShowTime(),null,200);
+//    @PreAuthorize("hasAuthority('USER')")
+    public ResponseEntity<MyResponse> getAllShowTime(){
+        return new ResponseEntity<MyResponse>(new MyResponse(showTimeService.getAllShowTime(),null),null,200);
     }
 
     @GetMapping("/{showTimeId}")
-    private ResponseEntity<?> getShowTimeById(@PathVariable Long showTimeId){
+    private ResponseEntity<MyResponse> getShowTimeById(@PathVariable Long showTimeId){
         try{
-            return new ResponseEntity<>(showTimeService.getShowTimeById(showTimeId),null,200);
+            return new ResponseEntity<MyResponse>(new MyResponse(showTimeService.getShowTimeById(showTimeId),null),null,200);
         }
         catch (Exception e){
-            return new ResponseEntity<>(e.getMessage(),null,404);
+            return new ResponseEntity<MyResponse>(new MyResponse(e.getMessage(),null),null,404);
         }
     }
 
     @GetMapping("/movie")
-    private ResponseEntity<?> getShowTimeByMovieId(@RequestParam(value = "movieId") Long movie){
+    private ResponseEntity<MyResponse> getShowTimeByMovieId(@RequestParam(value = "movieId") Long movie){
         try{
-            return new ResponseEntity<>(showTimeService.getShowTimeByMovieId(movie),null,200);
+            return new ResponseEntity<MyResponse>(new MyResponse(showTimeService.getShowTimeByMovieId(movie),null),null,200);
         }
         catch (Exception e){
-            return new ResponseEntity<>(e.getMessage(),null,404);
+            return new ResponseEntity<MyResponse>(new MyResponse(e.getMessage(),null),null,404);
         }
 
     }
 
     @PostMapping
-    private ResponseEntity<?> addShowTime(@RequestBody ShowTime showTime){
+    private ResponseEntity<MyResponse> addShowTime(@RequestBody ShowtimeRequest showTime){
         try{
-            return new ResponseEntity<>(showTimeService.addShowTime(showTime),null,200);
+            return new ResponseEntity<MyResponse>(new MyResponse(showTimeService.addShowTime(showTime),null),null,200);
         }
         catch (Exception e){
-            return new ResponseEntity<>(e.getMessage(),null,404);
+            return new ResponseEntity<MyResponse>(new MyResponse(e.getMessage(),null),null,404);
         }
     }
 
     @PutMapping("/{showTimeId}")
-    private ResponseEntity<?> updateShowTime(@PathVariable Long showTimeId,@RequestBody ShowTime showTime){
+    private ResponseEntity<MyResponse> updateShowTime(@PathVariable Long showTimeId,@RequestBody ShowtimeRequest showTime){
         try{
-            return new ResponseEntity<>(showTimeService.updateShowTime(showTimeId,showTime),null,200);
+            return new ResponseEntity<MyResponse>(new MyResponse(showTimeService.updateShowTime(showTimeId,showTime),null),null,200);
         }
         catch (Exception e){
-            return new ResponseEntity<>(e.getMessage(),null,404);
+            return new ResponseEntity<MyResponse>(new MyResponse(e.getMessage(),null),null,404);
         }
     }
 
     @DeleteMapping("/{showTimeId}")
-    private ResponseEntity<?> deleteShowTime(@PathVariable Long showTimeId){
+    private ResponseEntity<MyResponse> deleteShowTime(@PathVariable Long showTimeId){
         try{
-            return new ResponseEntity<>(showTimeService.deleteShowTime(showTimeId),null,200);
+            return new ResponseEntity<MyResponse>(new MyResponse(showTimeService.deleteShowTime(showTimeId),null),null,200);
         }
         catch (Exception e){
-            return new ResponseEntity<>(e.getMessage(),null,404);
+            return new ResponseEntity<MyResponse>(new MyResponse(e.getMessage(),null),null,404);
         }
     }
 }
