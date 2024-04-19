@@ -12,12 +12,9 @@ import java.util.Date;
 @NoArgsConstructor
 public class TicketRequest {
     private double price;
-    private String seatLocation;
+    private String[] seatLocation;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private Date date;
-
     private Long showtimeId;
-
     private Long userId;
-
 }

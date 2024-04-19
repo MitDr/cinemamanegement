@@ -4,12 +4,15 @@ import com.project.cinemamanagement.Entity.User;
 import com.project.cinemamanagement.Exception.DataFoundException;
 import com.project.cinemamanagement.Exception.DataNotFoundException;
 import com.project.cinemamanagement.PayLoad.Request.UserRequest;
+import com.project.cinemamanagement.PayLoad.Response.TicketResponse;
+import com.project.cinemamanagement.PayLoad.Response.UserResponse;
 import com.project.cinemamanagement.Repository.UserRepository;
 import com.project.cinemamanagement.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -21,12 +24,17 @@ public class UserImpl implements UserService {
     private PasswordEncoder encoder;
 
     @Override
-    public List<User> getAllUser() {
-        return userRepository.findAll();
+    public List<UserResponse> getAllUser() {
+        List<User> userList = userRepository.findAll();
+        List<UserResponse> userResponses = new ArrayList<>();
+        for (User user : userList) {
+            userResponses.add(new UserResponse(user.getUserName(), user.getFullName(), user.getEmail(), user.getPhone(), user.getAddress()));
+        }
+        return userResponses;
     }
 
     @Override
-    public User addUser(UserRequest userRequest) {
+    public UserResponse addUser(UserRequest userRequest) {
         User user = new User();
         if (userRepository.existsByUserName(userRequest.getUserName())) {
             throw new DataFoundException("User already exists");
@@ -39,16 +47,18 @@ public class UserImpl implements UserService {
             user.setAddress(userRequest.getAddress());
             user.setPassWord(encoder.encode(userRequest.getPassWord()));
         }
-        return userRepository.save(user);
+        userRepository.save(user);
+        return new UserResponse(user.getUserName(), user.getFullName(), user.getEmail(), user.getPhone(), user.getAddress());
     }
 
     @Override
-    public User getUserById(Long userId) {
-        return userRepository.findById(userId).orElseThrow(() -> new DataNotFoundException("User not found"));
+    public UserResponse getUserById(Long userId) {
+        User user =  userRepository.findById(userId).orElseThrow(() -> new DataNotFoundException("User not found"));
+        return new UserResponse(user.getUserName(), user.getFullName(), user.getEmail(), user.getPhone(), user.getAddress());
     }
 
     @Override
-    public User updateUser(Long userId, User user) {
+    public UserResponse updateUser(Long userId, User user) {
         User updateUser = userRepository.findById(userId).orElseThrow(() -> new DataNotFoundException("User not found"));
 
         updateUser.setUserName(user.getUserName());
@@ -58,14 +68,15 @@ public class UserImpl implements UserService {
         updateUser.setFullName(user.getFullName());
         updateUser.setRole(user.getRole());
 
-        return userRepository.save(updateUser);
+        userRepository.save(updateUser);
+        return new UserResponse(updateUser.getUserName(), updateUser.getFullName(), updateUser.getEmail(), updateUser.getPhone(), updateUser.getAddress());
     }
 
     @Override
-    public User deleteUser(Long userId) {
+    public UserResponse deleteUser(Long userId) {
         User deleteUser = userRepository.findById(userId).orElseThrow(() -> new DataNotFoundException("User not found"));
         userRepository.delete(deleteUser);
-        return deleteUser;
+        return new UserResponse(deleteUser.getUserName(), deleteUser.getFullName(), deleteUser.getEmail(), deleteUser.getPhone(), deleteUser.getAddress());
     }
 
     @Override
@@ -85,5 +96,10 @@ public class UserImpl implements UserService {
         User user = userRepository.findByRefreshToken(refreshToken);
         user.setRefreshToken(null);
         userRepository.save(user);
+    }
+
+    @Override
+    public User getUserByUserName(String userName) {
+        return userRepository.findByUserName(userName);
     }
 }

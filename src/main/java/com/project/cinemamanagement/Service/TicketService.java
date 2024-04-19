@@ -6,7 +6,7 @@ import com.project.cinemamanagement.PayLoad.Response.TicketResponse;
 import java.util.List;
 
 public interface TicketService {
-    TicketResponse addTicket(TicketRequest ticket);
+    List<TicketResponse> addTicket(TicketRequest ticket);
 
     TicketResponse getTicketById(Long ticketId);
 
