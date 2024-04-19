@@ -6,6 +6,7 @@ import com.project.cinemamanagement.Service.MovieService;
 import com.project.cinemamanagement.Service.ShowTimeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -15,7 +16,8 @@ public class ShowTimeController {
     private ShowTimeService showTimeService;
 
     @GetMapping
-    private ResponseEntity<?> getAllShowTime(){
+    @PreAuthorize("hasAuthority('USER')")
+    public ResponseEntity<?> getAllShowTime(){
         return new ResponseEntity<>(showTimeService.getAllShowTime(),null,200);
     }
 

@@ -1,12 +1,10 @@
 package com.project.cinemamanagement.Entity;
 
+import com.project.cinemamanagement.Enum.ROLE;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Data
@@ -30,5 +28,9 @@ public class User {
     private String phone;
     @Column(name = "user_address")
     private String address;
-
+    @Column(name = "user_role")
+    @Enumerated(EnumType.STRING)
+    private ROLE role = ROLE.USER;
+    @Column(name = "user_refresh_token")
+    private String refreshToken;
 }
