@@ -8,6 +8,7 @@ import com.project.cinemamanagement.MyResponse.TokenResponse;
 import com.project.cinemamanagement.PayLoad.Request.AuthRequest;
 import com.project.cinemamanagement.PayLoad.Request.UserRequest;
 import com.project.cinemamanagement.Provider.CustomAuthentication;
+import com.project.cinemamanagement.Service.EmailService;
 import com.project.cinemamanagement.Service.JwtService;
 import com.project.cinemamanagement.Service.UserService;
 import jakarta.validation.Valid;
@@ -23,7 +24,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,6 +36,8 @@ import java.util.Map;
 public class LoginController {
     @Autowired
     private UserService userService;
+    @Autowired
+    private EmailService emailService;
     @Autowired
     private JwtService jwtService;
     @Autowired
@@ -63,6 +65,7 @@ public class LoginController {
     @PostMapping("/register")
     private ResponseEntity<MyResponse> addNewUser(@Valid @RequestBody UserRequest userRequest){
         userService.addUser(userRequest);
+        emailService.sendEmail(userRequest.getEmail(), "Xin chão " + userRequest.getUserName() +  "!", "Cảm ơn bạn đăng kí dịch vụ mua vé của chúng tôi");
         return new ResponseEntity<MyResponse>(new MyResponse(null,"register sucessfully"), HttpStatus.OK);
     }
 

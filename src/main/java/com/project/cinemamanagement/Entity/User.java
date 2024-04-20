@@ -1,6 +1,7 @@
 package com.project.cinemamanagement.Entity;
 
 import com.project.cinemamanagement.Enum.ROLE;
+import com.project.cinemamanagement.PayLoad.Response.TicketResponse;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

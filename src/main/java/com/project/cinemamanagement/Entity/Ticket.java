@@ -1,6 +1,7 @@
 package com.project.cinemamanagement.Entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.project.cinemamanagement.PayLoad.Request.TicketRequest;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,7 +18,7 @@ public class Ticket {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idTicket;
     @Column(name = "price")
-    private double price;
+    private Long price;
     @Column(name = "seatLocation")
     private String seatLocation;
     @Column(name = "date")
@@ -31,4 +32,11 @@ public class Ticket {
     @ManyToOne
     @JoinColumn(name = "userId")
     private User user;
+
+    public Ticket(TicketRequest ticketRequest, ShowTime showTime, User user) {
+        this.price = ticketRequest.getPrice();
+        this.date = ticketRequest.getDate();
+        this.showTime = showTime;
+        this.user = user;
+    }
 }

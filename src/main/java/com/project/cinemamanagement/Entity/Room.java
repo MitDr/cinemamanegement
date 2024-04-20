@@ -18,7 +18,7 @@ public class Room {
     @Column(name = "status")
     private int status;
     @Column(name = "seatQuantity")
-    private int seatQuantity;
+    private int seatQuantity = 0;
     @Column(name = "roomType")
     private String roomType;
 

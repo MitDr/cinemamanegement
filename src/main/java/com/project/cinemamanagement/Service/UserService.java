@@ -2,22 +2,26 @@ package com.project.cinemamanagement.Service;
 
 import com.project.cinemamanagement.Entity.User;
 import com.project.cinemamanagement.PayLoad.Request.UserRequest;
+import com.project.cinemamanagement.PayLoad.Response.UserResponse;
+import com.project.cinemamanagement.PayLoad.Response.UserTicketResponse;
 
 import java.util.List;
 
 public interface UserService {
-    List<User> getAllUser();
+    List<UserResponse> getAllUser();
 
-    User addUser(UserRequest user);
+    UserResponse addUser(UserRequest user);
 
-    User getUserById(Long userId);
+    UserResponse getUserById(Long userId);
 
-    User updateUser(Long userId, User user);
+    UserResponse updateUser(Long userId, User user);
 
-    User deleteUser(Long userId);
+    UserResponse deleteUser(Long userId);
     void saveRefreshToken(String userName, String refreshToken);
 
     User getUserByRefreshToken(String refreshToken);
 
     void deleteRefreshToken(String refreshToken);
+    User getUserByUserName(String userName);
+    UserTicketResponse getUserTicketByUserName(Long userId);
 }

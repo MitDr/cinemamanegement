@@ -19,65 +19,33 @@ public class MovieController {
 
 
     @GetMapping
-
-//    @PreAuthorize("hasAuthority('USER')")
     public ResponseEntity<MyResponse> getAllMovie(){
-        return new ResponseEntity<MyResponse>(new MyResponse(movieService.getAllMovie(),null),null,200);
+        return new ResponseEntity<MyResponse>(new MyResponse(movieService.getAllMovie(),"Get all movie"),null,200);
     }
 
     @GetMapping("/{movieId}")
     public ResponseEntity<MyResponse> getMovieById(@PathVariable Long movieId){
-        try{
-            return new ResponseEntity<MyResponse>(new MyResponse(movieService.getMovieById(movieId),null),null, HttpStatus.OK);
-        }
-        catch (Exception e){
-            return new ResponseEntity<MyResponse>(new MyResponse(e.getMessage(),null),null,HttpStatus.NOT_FOUND);
-        }
+        return new ResponseEntity<MyResponse>(new MyResponse(movieService.getMovieById(movieId),"Movie with id: "+" "+movieId+" is get"),null, HttpStatus.OK);
     }
 
     @PostMapping
-//    @PreAuthorize("hasAuthority('USER')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<MyResponse> addMovie(@RequestBody Movie movie){
-        return new ResponseEntity<MyResponse>(new MyResponse(movieService.addMovie(movie),null),null,HttpStatus.CREATED);
+        movieService.addMovie(movie);
+        return new ResponseEntity<MyResponse>(new MyResponse(null,"Add new movie successfully"),null,HttpStatus.CREATED);
     }
 
     @PutMapping("/{movieId}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     private ResponseEntity<MyResponse> updateMovie(@PathVariable Long movieId,@RequestBody Movie movie){
-        try{
-            return new ResponseEntity<MyResponse>(new MyResponse(movieService.updateMovie(movieId,movie),null),null,HttpStatus.OK);
-        }
-        catch (Exception e){
-            return new ResponseEntity<MyResponse>(new MyResponse(e.getMessage(),null),null,HttpStatus.NOT_FOUND);
-        }
+        movieService.updateMovie(movieId,movie);
+        return new ResponseEntity<MyResponse>(new MyResponse(null,"Update movie successfully"),null,HttpStatus.OK);
     }
 
     @DeleteMapping("/{movieId}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     private ResponseEntity<MyResponse> deleteMovie(@PathVariable Long movieId){
-        try{
-            return new ResponseEntity<MyResponse>(new MyResponse(movieService.deleteMovie(movieId),null),null,HttpStatus.OK);
-        }
-        catch (Exception e){
-            return new ResponseEntity<>(new MyResponse(e.getMessage(),null),null,HttpStatus.NOT_FOUND);
-        }
+        movieService.deleteMovie(movieId);
+        return new ResponseEntity<MyResponse>(new MyResponse(null,"Delete movie successfully"),null,HttpStatus.OK);
     }
-// Payload if needed
-//    @GetMapping("/payload")
-//    private ResponseEntity<?> getMovieList(){
-//        return new ResponseEntity<>(movieService.getMovieList(),null,HttpStatus.OK);
-//    }
-//
-//    @PutMapping("/payload/{movieId}")
-//    private ResponseEntity<?> updateMovieStatus(@PathVariable Long movieId, @RequestBody MovieResponse movieResponse){
-//        try{
-//            Movie updateMovie = movieService.getMovieById(movieId);
-//            updateMovie.setStatus(movieResponse.getStatus());
-//            updateMovie.setReleaseDate(movieResponse.getReleaseDate());
-//            updateMovie.setEndDate(movieResponse.getEndDate());
-//            updateMovie.setAgeRestriction(movieResponse.getAgeRestriction());
-//            return new ResponseEntity<>(movieService.updateMovie(movieId,updateMovie),null,HttpStatus.OK);
-//        }
-//        catch (Exception e){
-//            return new ResponseEntity<>(e.getMessage(),null,HttpStatus.NOT_FOUND);
-//        }
-//    }
 }

@@ -35,21 +35,18 @@ public class UserController {
 
     @PutMapping("/{userId}")
     @PreAuthorize("hasAuthority('USER')")
-    public ResponseEntity<?> updateUser(@PathVariable Long userId, @RequestBody User user){
-        try{
-            return new ResponseEntity<>(userService.updateUser(userId,user),null,200);
-        }
-        catch (Exception e){
-            return new ResponseEntity<>(e.getMessage(),null,404);
-        }
+    public ResponseEntity<MyResponse> updateUser(@PathVariable Long userId, @RequestBody User user){
+        userService.updateUser(userId,user);
+        return new ResponseEntity<MyResponse>(new MyResponse(null,"Update user successfully"),null,200);
     }
 
     @DeleteMapping("/{userId}")
-    private ResponseEntity<?> deleteUser(@PathVariable Long userId){
-        return new ResponseEntity<>(userService.deleteUser(userId),null,200);
+    private ResponseEntity<MyResponse> deleteUser(@PathVariable Long userId){
+        userService.deleteUser(userId);
+        return new ResponseEntity<MyResponse>(new MyResponse(null,"Delete user successfully"),null,200);
     }
-    @GetMapping("/testing")
-    public ResponseEntity<?> getAll(){
-        return new ResponseEntity<>(userService.getAllUser(),null,200);
+    @GetMapping("/testing/{userId}")
+    public ResponseEntity<MyResponse> getAll(@PathVariable Long userId){
+        return new ResponseEntity<>(new MyResponse(userService.getUserTicketByUserName(userId),"All user ticket is get"),null,200);
     }
 }
