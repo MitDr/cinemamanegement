@@ -27,7 +27,9 @@ public class SeatSpecifications {
             subquery.select(ticketJoin.get("seatLocation"))
                     .where(criteriaBuilder.equal(subRoot.get("showTimeId"), showtimeId));
 
-            Predicate finalPredicate = criteriaBuilder.not(root.get("seatNumber").in(subquery));
+            Predicate sub1predicate = criteriaBuilder.not(root.get("seatNumber").in(subquery));
+            Predicate sub2predicate = criteriaBuilder.equal(showtimeJoin.get("showTimeId"), showtimeId);
+            Predicate finalPredicate = criteriaBuilder.and(sub1predicate,sub2predicate);
 
             return finalPredicate;
         });
