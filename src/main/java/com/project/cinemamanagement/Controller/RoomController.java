@@ -22,7 +22,7 @@ public class RoomController {
         }
     }
     @GetMapping("/{roomId}")
-    private ResponseEntity<MyResponse> getRoomByRoomId(Long roomId) {
+    private ResponseEntity<MyResponse> getRoomByRoomId(@PathVariable Long roomId) {
         try {
             return new ResponseEntity<MyResponse>(new MyResponse(roomService.getRoomByRoomId(roomId),null), null, 200);
         } catch (Exception e) {
@@ -38,7 +38,7 @@ public class RoomController {
         }
     }
     @PutMapping("/{roomId}")
-    private ResponseEntity<MyResponse> updateRoom(Long roomId, Room room) {
+    private ResponseEntity<MyResponse> updateRoom(@PathVariable Long roomId, @RequestBody Room room) {
         try {
             return new ResponseEntity<MyResponse>(new MyResponse(roomService.updateRoom(roomId, room), null), null, 200);
         } catch (Exception e) {
@@ -46,7 +46,7 @@ public class RoomController {
         }
     }
     @DeleteMapping("/{roomId}")
-    private ResponseEntity<MyResponse> deleteRoom(Long roomId) {
+    private ResponseEntity<MyResponse> deleteRoom(@PathVariable Long roomId) {
         try {
             return new ResponseEntity<MyResponse>(new MyResponse(roomService.deleteRoom(roomId), null), null, 200);
         } catch (Exception e) {

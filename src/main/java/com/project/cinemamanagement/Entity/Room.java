@@ -28,5 +28,12 @@ public class Room {
     @OneToMany(mappedBy = "room")
     private List<Seat> Seat;
 
+    public void addSeatQuantity() {
+        this.seatQuantity++;
+    }
+    public void reduceSeatQuantity() {
+        this.seatQuantity--;
+    }
+
 
 }

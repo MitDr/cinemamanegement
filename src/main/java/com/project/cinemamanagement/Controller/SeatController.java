@@ -23,16 +23,16 @@ public class SeatController {
         }
     }
     @GetMapping("/{id}")
-    private ResponseEntity<MyResponse> getSeatById(Long id){
+    private ResponseEntity<MyResponse> getSeatById(@PathVariable Long id){
         try{
             return new ResponseEntity<MyResponse>(new MyResponse(seatService.getSeatById(id),null),null,200);
         }
         catch (Exception e){
-            return new ResponseEntity<MyResponse>(new MyResponse(e.getMessage(),null),null,404);
+            return new ResponseEntity<MyResponse>(new MyResponse(e.getMessage(),"test1"),null,404);
         }
     }
     @DeleteMapping("/{id}")
-    private ResponseEntity<MyResponse> deleteSeat(Long id){
+    private ResponseEntity<MyResponse> deleteSeat(@PathVariable Long id){
         try{
             return new ResponseEntity<MyResponse>(new MyResponse(seatService.deleteSeat(id),null),null,200);
         }
@@ -45,6 +45,15 @@ public class SeatController {
         try{
 
             return new ResponseEntity<MyResponse>(new MyResponse(seatService.addSeat(seatRequest),null),null,200);
+        }
+        catch (Exception e){
+            return new ResponseEntity<MyResponse>(new MyResponse(e.getMessage(),null),null,404);
+        }
+    }
+    @PutMapping("/{id}")
+    private ResponseEntity<MyResponse> updateSeat(@PathVariable Long id,@RequestBody SeatRequest seatRequest){
+        try{
+            return new ResponseEntity<MyResponse>(new MyResponse(seatService.updateSeat(id,seatRequest),null),null,200);
         }
         catch (Exception e){
             return new ResponseEntity<MyResponse>(new MyResponse(e.getMessage(),null),null,404);
