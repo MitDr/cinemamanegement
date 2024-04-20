@@ -15,42 +15,25 @@ public class RoomController {
 
     @GetMapping
     private ResponseEntity<MyResponse> getAllRoom() {
-        try {
-            return new ResponseEntity<MyResponse>(new MyResponse(roomService.getAllRoom(),null), null, 200);
-        } catch (Exception e) {
-            return new ResponseEntity<MyResponse>(new MyResponse(e.getMessage(),null), null, 404);
-        }
+        return new ResponseEntity<MyResponse>(new MyResponse(roomService.getAllRoom(),"Get all room"), null, 200);
     }
     @GetMapping("/{roomId}")
     private ResponseEntity<MyResponse> getRoomByRoomId(@PathVariable Long roomId) {
-        try {
-            return new ResponseEntity<MyResponse>(new MyResponse(roomService.getRoomByRoomId(roomId),null), null, 200);
-        } catch (Exception e) {
-            return new ResponseEntity<MyResponse>(new MyResponse(e.getMessage(),null), null, 404);
-        }
+        return new ResponseEntity<MyResponse>(new MyResponse(roomService.getRoomByRoomId(roomId),"Get room by room id"), null, 200);
     }
     @PostMapping
     private ResponseEntity<MyResponse> addRoom(@RequestBody Room room) {
-        try {
-            return new ResponseEntity<MyResponse>(new MyResponse(roomService.addRoom(room), null), null, 200);
-        } catch (Exception e) {
-            return new ResponseEntity<MyResponse>(new MyResponse(e.getMessage(), null), null, 404);
-        }
+        roomService.addRoom(room);
+        return new ResponseEntity<MyResponse>(new MyResponse(null, "Add new room successfully"), null, 200);
     }
     @PutMapping("/{roomId}")
     private ResponseEntity<MyResponse> updateRoom(@PathVariable Long roomId, @RequestBody Room room) {
-        try {
-            return new ResponseEntity<MyResponse>(new MyResponse(roomService.updateRoom(roomId, room), null), null, 200);
-        } catch (Exception e) {
-            return new ResponseEntity<MyResponse>(new MyResponse(e.getMessage(), null), null, 404);
-        }
+        roomService.updateRoom(roomId, room);
+        return new ResponseEntity<MyResponse>(new MyResponse(null, "Update room successfully"), null, 200);
     }
     @DeleteMapping("/{roomId}")
     private ResponseEntity<MyResponse> deleteRoom(@PathVariable Long roomId) {
-        try {
-            return new ResponseEntity<MyResponse>(new MyResponse(roomService.deleteRoom(roomId), null), null, 200);
-        } catch (Exception e) {
-            return new ResponseEntity<MyResponse>(new MyResponse(e.getMessage(), null), null, 404);
-        }
+        roomService.deleteRoom(roomId);
+        return new ResponseEntity<MyResponse>(new MyResponse(null, "Delete room successfully"), null, 200);
     }
 }

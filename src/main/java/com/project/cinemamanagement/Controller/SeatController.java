@@ -15,75 +15,37 @@ public class SeatController {
 
     @GetMapping
     private ResponseEntity<MyResponse> getAllSeat(){
-        try{
-            return new ResponseEntity<MyResponse>(new MyResponse(seatService.getAllSeat(),null),null,200);
-        }
-        catch (Exception e){
-            return new ResponseEntity<MyResponse>(new MyResponse(e.getMessage(),null),null,404);
-        }
+        return new ResponseEntity<MyResponse>(new MyResponse(seatService.getAllSeat(),"Get all seat"),null,200);
     }
     @GetMapping("/{id}")
     private ResponseEntity<MyResponse> getSeatById(@PathVariable Long id){
-        try{
-            return new ResponseEntity<MyResponse>(new MyResponse(seatService.getSeatById(id),null),null,200);
-        }
-        catch (Exception e){
-            return new ResponseEntity<MyResponse>(new MyResponse(e.getMessage(),"test1"),null,404);
-        }
+        return new ResponseEntity<MyResponse>(new MyResponse(seatService.getSeatById(id),"Get seat by id"),null,200);
     }
     @DeleteMapping("/{id}")
     private ResponseEntity<MyResponse> deleteSeat(@PathVariable Long id){
-        try{
-            return new ResponseEntity<MyResponse>(new MyResponse(seatService.deleteSeat(id),null),null,200);
-        }
-        catch (Exception e){
-            return new ResponseEntity<MyResponse>(new MyResponse(e.getMessage(),null),null,404);
-        }
+        seatService.deleteSeat(id);
+        return new ResponseEntity<MyResponse>(new MyResponse(null,"Delete seat successfully"),null,200);
     }
     @PostMapping
     private ResponseEntity<MyResponse> addSeat(@RequestBody SeatRequest seatRequest){
-        try{
-
-            return new ResponseEntity<MyResponse>(new MyResponse(seatService.addSeat(seatRequest),null),null,200);
-        }
-        catch (Exception e){
-            return new ResponseEntity<MyResponse>(new MyResponse(e.getMessage(),null),null,404);
-        }
+        seatService.addSeat(seatRequest);
+        return new ResponseEntity<MyResponse>(new MyResponse(null,"Add new seat successfully"),null,200);
     }
     @PutMapping("/{id}")
     private ResponseEntity<MyResponse> updateSeat(@PathVariable Long id,@RequestBody SeatRequest seatRequest){
-        try{
-            return new ResponseEntity<MyResponse>(new MyResponse(seatService.updateSeat(id,seatRequest),null),null,200);
-        }
-        catch (Exception e){
-            return new ResponseEntity<MyResponse>(new MyResponse(e.getMessage(),null),null,404);
-        }
+        seatService.updateSeat(id,seatRequest);
+        return new ResponseEntity<MyResponse>(new MyResponse(null,"Update seat successfully"),null,200);
     }
     @GetMapping("/room/{roomType}")
     private ResponseEntity<MyResponse> getSeatByRoomType(@PathVariable String roomType){
-        try{
-            return new ResponseEntity<MyResponse>(new MyResponse(seatService.getAllSeatResponseByRoomType(roomType),null),null,200);
-        }
-        catch (Exception e){
-            return new ResponseEntity<MyResponse>(new MyResponse(e.getMessage(),null),null,404);
-        }
+        return new ResponseEntity<MyResponse>(new MyResponse(seatService.getAllSeatResponseByRoomType(roomType),"Get seat by room type"),null,200);
     }
-    @GetMapping("showtime/allseat/{id}")
-    private ResponseEntity<MyResponse> getSeatByShowtimeId(@PathVariable Long id){
-        try{
-            return new ResponseEntity<MyResponse>(new MyResponse(seatService.getAllSeatbyShowtimeId(id),null),null,200);
-        }
-        catch (Exception e){
-            return new ResponseEntity<MyResponse>(new MyResponse(e.getMessage(),null),null,404);
-        }
+    @GetMapping("showtime/allseat/{showtimeId}")
+    private ResponseEntity<MyResponse> getSeatByShowtimeId(@PathVariable Long showtimeId){
+        return new ResponseEntity<MyResponse>(new MyResponse(seatService.getAllSeatbyShowtimeId(showtimeId),"Get seat by showtime"),null,200);
     }
-    @GetMapping("showtime/untakenseat/{id}")
-    private ResponseEntity<MyResponse> getUntakenSeat(@PathVariable Long id){
-        try{
-            return new ResponseEntity<MyResponse>(new MyResponse(seatService.getUntakenSeat(id),null),null,200);
-        }
-        catch (Exception e){
-            return new ResponseEntity<MyResponse>(new MyResponse(e.getMessage(),null),null,404);
-        }
+    @GetMapping("showtime/untakenseat/{showtimeId}")
+    private ResponseEntity<MyResponse> getUntakenSeat(@PathVariable Long showtimeId){
+        return new ResponseEntity<MyResponse>(new MyResponse(seatService.getUntakenSeat(showtimeId),"Get untaken seat by showtime"),null,200);
     }
 }

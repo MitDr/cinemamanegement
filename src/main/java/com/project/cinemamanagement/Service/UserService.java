@@ -19,9 +19,9 @@ public interface UserService {
     UserResponse deleteUser(Long userId);
     void saveRefreshToken(String userName, String refreshToken);
 
-    User getUserByRefreshToken(String refreshToken);
+    UserResponse getUserByRefreshToken(String refreshToken);
 
     void deleteRefreshToken(String refreshToken);
-    User getUserByUserName(String userName);
+    UserResponse getUserByUserName(String userName);
     UserTicketResponse getUserTicketByUserName(Long userId);
 }

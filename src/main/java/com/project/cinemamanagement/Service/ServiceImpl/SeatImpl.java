@@ -124,14 +124,15 @@ public class SeatImpl implements SeatService {
             seatResponse.setSeatNumber(seat.getSeatNumber());
             seatResponse.setSeatType(seat.getSeatType());
             seatResponse.setSeatStatus(seat.getSeatStatus());
+            seatResponse.setSeatId(seat.getSeatID());
             seatResponseList.add(seatResponse);
         }
         return seatResponseList;
     }
 
     @Override
-    public List<SeatResponse> getAllSeatbyShowtimeId(Long roomId) {
-        Specification<Seat> spec = SeatSpecifications.getAllSeatbyShowtimeId(roomId);
+    public List<SeatResponse> getAllSeatbyShowtimeId(Long showtimeId) {
+        Specification<Seat> spec = SeatSpecifications.getAllSeatbyShowtimeId(showtimeId);
         List<Seat> seatList = seatRepository.findAll(spec);
         List<SeatResponse> seatResponseList = new ArrayList<>();
         for (Seat seat: seatList) {
@@ -139,6 +140,7 @@ public class SeatImpl implements SeatService {
             seatResponse.setSeatNumber(seat.getSeatNumber());
             seatResponse.setSeatType(seat.getSeatType());
             seatResponse.setSeatStatus(seat.getSeatStatus());
+            seatResponse.setSeatId(seat.getSeatID());
             seatResponseList.add(seatResponse);
         }
         return seatResponseList;

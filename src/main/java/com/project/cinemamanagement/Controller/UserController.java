@@ -26,6 +26,11 @@ public class UserController {
     public ResponseEntity<MyResponse> getAllUser(){
         return new ResponseEntity<>(new MyResponse(userService.getAllUser(),"All user is get"),null,200);
     }
+//    @GetMapping("/paging")
+//    @PreAuthorize("hasAuthority('USER')")
+//    public ResponseEntity<MyResponse> getAllUserPaging(@RequestParam int page){
+//        return new ResponseEntity<>(new MyResponse(userService.getAllUserPaging(page),"All user is get"),null,200);
+//    }
 
     @GetMapping("/{userId}")
     @PreAuthorize("hasAuthority('USER')")

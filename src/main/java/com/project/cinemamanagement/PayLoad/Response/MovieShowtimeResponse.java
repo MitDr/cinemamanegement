@@ -2,16 +2,21 @@ package com.project.cinemamanagement.PayLoad.Response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.project.cinemamanagement.Entity.Movie;
+import com.project.cinemamanagement.Entity.ShowTime;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class MovieResponse {
+@AllArgsConstructor
+public class MovieShowtimeResponse {
     private Long movieId;
     private String movieName;
     private String movieGenre;
@@ -28,7 +33,9 @@ public class MovieResponse {
     private int status;
     private String urlThumbnail;
 
-    public MovieResponse(Movie movie) {
+    private List<ShowtimeResponse> showTimes;
+
+    public MovieShowtimeResponse(Movie movie, List<ShowtimeResponse> showTimes){
         this.movieId = movie.getMovieId();
         this.movieName = movie.getMovieName();
         this.movieGenre = movie.getMovieGenre();
@@ -42,5 +49,6 @@ public class MovieResponse {
         this.urlTrailer = movie.getUrlTrailer();
         this.status = movie.getStatus();
         this.urlThumbnail = movie.getUrlThumbnail();
+        this.showTimes = showTimes;
     }
 }

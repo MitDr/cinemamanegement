@@ -2,8 +2,12 @@ package com.project.cinemamanagement.Service.ServiceImpl;
 
 import com.project.cinemamanagement.Entity.Movie;
 import com.project.cinemamanagement.Exception.DataNotFoundException;
+import com.project.cinemamanagement.PayLoad.Response.MovieResponse;
+import com.project.cinemamanagement.PayLoad.Response.MovieShowtimeResponse;
+import com.project.cinemamanagement.PayLoad.Response.ShowtimeResponse;
 import com.project.cinemamanagement.Repository.MovieRepository;
 import com.project.cinemamanagement.Service.MovieService;
+import com.project.cinemamanagement.Service.ShowTimeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,23 +17,30 @@ import java.util.List;
 public class MovieImpl implements MovieService {
     @Autowired
     private MovieRepository movieRepository;
+    @Autowired
+    private ShowTimeService showTimeService;
     @Override
-    public List<Movie> getAllMovie() {
-        return movieRepository.findAll();
+    public List<MovieResponse> getAllMovie() {
+        List<Movie> movies = movieRepository.findAll();
+        return movies.stream().map(MovieResponse::new).toList();
+
     }
 
     @Override
-    public Movie addMovie(Movie movie) {
-        return movieRepository.save(movie);
+    public MovieResponse addMovie(Movie movie) {
+        movieRepository.save(movie);
+        return new MovieResponse(movie);
     }
 
     @Override
-    public Movie getMovieById(Long movieId) {
-        return movieRepository.findById(movieId).orElseThrow(() -> new DataNotFoundException("Movie not found"));
+    public MovieShowtimeResponse getMovieById(Long movieId) {
+        Movie movie = movieRepository.findById(movieId).orElseThrow(() -> new DataNotFoundException("Movie not found"));
+        List<ShowtimeResponse> showtimeResponseList = showTimeService.getShowTimeByMovieId(movieId);
+        return new MovieShowtimeResponse(movie, showtimeResponseList);
     }
 
     @Override
-    public Movie updateMovie(Long movieId, Movie movie) {
+    public MovieResponse updateMovie(Long movieId, Movie movie) {
         Movie updateMovie = movieRepository.findById(movieId).orElseThrow(() -> new DataNotFoundException("Movie not found"));
 
         updateMovie.setMovieName(movie.getMovieName());
@@ -44,15 +55,18 @@ public class MovieImpl implements MovieService {
         updateMovie.setUrlTrailer(movie.getUrlTrailer());
         updateMovie.setStatus(movie.getStatus());
 
-        return movieRepository.save(updateMovie);
+        movieRepository.save(updateMovie);
+
+        return new MovieResponse(updateMovie);
     }
 
     @Override
-    public Movie deleteMovie(Long movieId) {
+    public MovieResponse deleteMovie(Long movieId) {
         Movie deleteMovie = movieRepository.findById(movieId).orElseThrow(() -> new DataNotFoundException("Movie not found"));
 
         movieRepository.delete(deleteMovie);
-        return deleteMovie;
+
+        return new MovieResponse(deleteMovie);
     }
 
 }

@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -48,5 +49,5 @@ public class Movie {
     private String urlThumbnail;
 
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
-    private Set<ShowTime> showTimes = new HashSet<>();
+    private List<ShowTime> showTimes;
 }

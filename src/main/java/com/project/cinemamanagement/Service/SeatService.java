@@ -16,5 +16,5 @@ public interface SeatService {
     List<SeatResponse> getAllSeatResponse();
     List<SeatResponse> getAllSeatResponseByRoomType(String roomType);
     List<SeatResponse> getUntakenSeat(Long showtimeId);
-    List<SeatResponse> getAllSeatbyShowtimeId(Long roomId);
+    List<SeatResponse> getAllSeatbyShowtimeId(Long showtimeId);
 }
