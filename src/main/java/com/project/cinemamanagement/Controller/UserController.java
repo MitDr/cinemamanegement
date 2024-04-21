@@ -3,6 +3,7 @@ package com.project.cinemamanagement.Controller;
 import com.project.cinemamanagement.Entity.User;
 import com.project.cinemamanagement.MyResponse.MyResponse;
 import com.project.cinemamanagement.PayLoad.Request.AuthRequest;
+import com.project.cinemamanagement.PayLoad.Request.UserRequest;
 import com.project.cinemamanagement.Service.JwtService;
 import com.project.cinemamanagement.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +41,7 @@ public class UserController {
 
     @PutMapping("/{userId}")
     @PreAuthorize("hasAuthority('USER')")
-    public ResponseEntity<MyResponse> updateUser(@PathVariable Long userId, @RequestBody User user){
+    public ResponseEntity<MyResponse> updateUser(@PathVariable Long userId, @RequestBody UserRequest user){
         userService.updateUser(userId,user);
         return new ResponseEntity<MyResponse>(new MyResponse(null,"Update user successfully"),null,200);
     }
@@ -49,9 +50,5 @@ public class UserController {
     private ResponseEntity<MyResponse> deleteUser(@PathVariable Long userId){
         userService.deleteUser(userId);
         return new ResponseEntity<MyResponse>(new MyResponse(null,"Delete user successfully"),null,200);
-    }
-    @GetMapping("/testing/{userId}")
-    public ResponseEntity<MyResponse> getAll(@PathVariable Long userId){
-        return new ResponseEntity<>(new MyResponse(userService.getUserTicketByUserName(userId),"All user ticket is get"),null,200);
     }
 }

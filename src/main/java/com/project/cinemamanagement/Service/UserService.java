@@ -14,7 +14,7 @@ public interface UserService {
 
     UserResponse getUserById(Long userId);
 
-    UserResponse updateUser(Long userId, User user);
+    UserResponse updateUser(Long userId, UserRequest user);
 
     UserResponse deleteUser(Long userId);
     void saveRefreshToken(String userName, String refreshToken);

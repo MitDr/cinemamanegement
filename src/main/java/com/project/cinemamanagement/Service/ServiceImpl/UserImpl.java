@@ -61,7 +61,7 @@ public class UserImpl implements UserService {
     }
 
     @Override
-    public UserResponse updateUser(Long userId, User user) {
+    public UserResponse updateUser(Long userId, UserRequest user) {
         User updateUser = userRepository.findById(userId).orElseThrow(() -> new DataNotFoundException("User not found"));
 
         updateUser.setUserName(user.getUserName());
@@ -69,10 +69,9 @@ public class UserImpl implements UserService {
         updateUser.setEmail(user.getEmail());
         updateUser.setAddress(user.getAddress());
         updateUser.setFullName(user.getFullName());
-        updateUser.setRole(user.getRole());
 
         userRepository.save(updateUser);
-        return new UserResponse(updateUser.getUserName(), updateUser.getFullName(), updateUser.getEmail(), updateUser.getPhone(), updateUser.getAddress(),user.getRole());
+        return new UserResponse(updateUser.getUserName(), updateUser.getFullName(), updateUser.getEmail(), updateUser.getPhone(), updateUser.getAddress(),updateUser.getRole());
     }
 
     @Override

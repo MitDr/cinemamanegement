@@ -17,6 +17,11 @@ public class SeatController {
     private ResponseEntity<MyResponse> getAllSeat(){
         return new ResponseEntity<MyResponse>(new MyResponse(seatService.getAllSeat(),"Get all seat"),null,200);
     }
+    @GetMapping("/paging")
+    private ResponseEntity<MyResponse> getAllSeatPaging(@RequestParam(value = "pageNumber", defaultValue = "0") int pageNumber,
+                                                        @RequestParam(value = "pageSize", defaultValue = "5") int pageSize){
+        return new ResponseEntity<MyResponse>(new MyResponse(seatService.getAllSeatPaging(pageNumber,pageSize),"Get all seat paging"),null,200);
+    }
     @GetMapping("/{id}")
     private ResponseEntity<MyResponse> getSeatById(@PathVariable Long id){
         return new ResponseEntity<MyResponse>(new MyResponse(seatService.getSeatById(id),"Get seat by id"),null,200);

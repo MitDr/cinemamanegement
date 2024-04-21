@@ -64,7 +64,7 @@ public class TicketController {
         ticketService.addTicket(ticket);
         return new ResponseEntity<MyResponse>(new MyResponse(null,"Thêm vé thành công"),null,HttpStatus.CREATED);
     }
-    @PutMapping
+    @PutMapping("/{ticketId}")
     public ResponseEntity<MyResponse> updateTicket(@PathVariable Long ticketId,@RequestBody TicketRequest ticket){
         return new ResponseEntity<MyResponse>(new MyResponse(ticketService.updateTicket(ticketId,ticket),"Update ticket successfully"),null,HttpStatus.OK);
     }

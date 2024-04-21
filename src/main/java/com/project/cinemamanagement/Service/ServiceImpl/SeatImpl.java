@@ -10,6 +10,9 @@ import com.project.cinemamanagement.Repository.SeatRepository;
 import com.project.cinemamanagement.Service.SeatService;
 import com.project.cinemamanagement.Specifications.SeatSpecifications;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -48,8 +51,16 @@ public class SeatImpl implements SeatService {
         seat.setRoom(temp);
         seatRepository.save(seat);
 
-
         return new SeatResponse(seat.getSeatID(), seat.getSeatStatus(), seat.getSeatNumber(), seat.getSeatType());
+    }
+
+    @Override
+    public Page<SeatResponse> getAllSeatPaging(int pageNumber, int pageSize) {
+
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        Page<Seat> page = seatRepository.findBySeatStatus(1, pageable);
+
+        return page.map(seat -> new SeatResponse(seat.getSeatID(), seat.getSeatStatus(), seat.getSeatNumber(), seat.getSeatType()));
     }
 
     @Override
