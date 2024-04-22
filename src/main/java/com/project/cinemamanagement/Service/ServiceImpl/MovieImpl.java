@@ -1,9 +1,11 @@
 package com.project.cinemamanagement.Service.ServiceImpl;
 
 import com.project.cinemamanagement.Entity.Movie;
+import com.project.cinemamanagement.Entity.Seat;
 import com.project.cinemamanagement.Exception.DataNotFoundException;
 import com.project.cinemamanagement.PayLoad.Response.MovieResponse;
 import com.project.cinemamanagement.PayLoad.Response.MovieShowtimeResponse;
+import com.project.cinemamanagement.PayLoad.Response.SeatResponse;
 import com.project.cinemamanagement.PayLoad.Response.ShowtimeResponse;
 import com.project.cinemamanagement.Repository.MovieRepository;
 import com.project.cinemamanagement.Service.MovieService;
@@ -11,6 +13,7 @@ import com.project.cinemamanagement.Service.ShowTimeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -21,8 +24,12 @@ public class MovieImpl implements MovieService {
     private ShowTimeService showTimeService;
     @Override
     public List<MovieResponse> getAllMovie() {
-        List<Movie> movies = movieRepository.findAll();
-        return movies.stream().map(MovieResponse::new).toList();
+        List<Movie> movieList = movieRepository.findAllByOrderByMovieId();
+        List<MovieResponse> movieResponses = new ArrayList<>();
+        for (Movie movie: movieList) {
+            movieResponses.add(new MovieResponse(movie));
+        }
+        return movieResponses;
 
     }
 

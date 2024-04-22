@@ -30,7 +30,7 @@ public class SeatImpl implements SeatService {
         List<Seat> seatList = seatRepository.findAll();
         List<SeatResponse> seatResponseList = new ArrayList<>();
         for (Seat seat: seatList) {
-            seatResponseList.add(new SeatResponse(seat.getSeatID(), seat.getSeatStatus(), seat.getSeatNumber(), seat.getSeatType()));
+            seatResponseList.add(new SeatResponse(seat));
         }
         return seatResponseList;
     }
@@ -51,7 +51,7 @@ public class SeatImpl implements SeatService {
         seat.setRoom(temp);
         seatRepository.save(seat);
 
-        return new SeatResponse(seat.getSeatID(), seat.getSeatStatus(), seat.getSeatNumber(), seat.getSeatType());
+        return new SeatResponse(seat);
     }
 
     @Override
@@ -60,14 +60,14 @@ public class SeatImpl implements SeatService {
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
         Page<Seat> page = seatRepository.findBySeatStatus(1, pageable);
 
-        return page.map(seat -> new SeatResponse(seat.getSeatID(), seat.getSeatStatus(), seat.getSeatNumber(), seat.getSeatType()));
+        return page.map(seat -> new SeatResponse(seat.getSeatID(), seat.getSeatStatus(), seat.getSeatNumber(), seat.getSeatType(), seat.getRoom().getRoomID()));
     }
 
     @Override
     public SeatResponse getSeatById(Long seatId) {
         Seat seat = seatRepository.findById(seatId).orElseThrow(() -> new DataNotFoundException("Seat not found"));
 
-        return new SeatResponse(seat.getSeatID(), seat.getSeatStatus(), seat.getSeatNumber(), seat.getSeatType());
+        return new SeatResponse(seat);
     }
 
     @Override
@@ -81,7 +81,7 @@ public class SeatImpl implements SeatService {
 
         seatRepository.save(tempSeat);
 
-        return new SeatResponse(tempSeat.getSeatID(), tempSeat.getSeatStatus(), tempSeat.getSeatNumber(), tempSeat.getSeatType());
+        return new SeatResponse(tempSeat);
     }
 
     @Override
@@ -89,7 +89,7 @@ public class SeatImpl implements SeatService {
         Seat temp = seatRepository.findById(seatId).orElseThrow(() -> new DataNotFoundException("Seat not found"));
         seatRepository.delete(temp);
 
-        return new SeatResponse(temp.getSeatID(), temp.getSeatStatus(), temp.getSeatNumber(), temp.getSeatType());
+        return new SeatResponse(temp);
     }
 
     @Override
@@ -136,7 +136,9 @@ public class SeatImpl implements SeatService {
             seatResponse.setSeatType(seat.getSeatType());
             seatResponse.setSeatStatus(seat.getSeatStatus());
             seatResponse.setSeatId(seat.getSeatID());
+            seatResponse.setRoomId(seat.getRoom().getRoomID());
             seatResponseList.add(seatResponse);
+
         }
         return seatResponseList;
     }
@@ -152,6 +154,7 @@ public class SeatImpl implements SeatService {
             seatResponse.setSeatType(seat.getSeatType());
             seatResponse.setSeatStatus(seat.getSeatStatus());
             seatResponse.setSeatId(seat.getSeatID());
+            seatResponse.setRoomId(seat.getRoom().getRoomID());
             seatResponseList.add(seatResponse);
         }
         return seatResponseList;

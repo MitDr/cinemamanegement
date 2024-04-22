@@ -18,7 +18,7 @@ public class RoomImpl implements RoomService {
     public List<RoomResponse> getAllRoom() {
         List<Room> temp;
         List<RoomResponse> roomResponseList = new ArrayList<>();
-        temp = roomRepository.findAll();
+        temp = roomRepository.findAllByOrderByRoomID();
         for (Room room: temp) {
             roomResponseList.add(new RoomResponse(room.getRoomID(),room.getStatus(),room.getSeatQuantity(), room.getRoomType()));
         }

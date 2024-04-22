@@ -13,11 +13,13 @@ public class SeatResponse {
     private int SeatStatus;
     private String SeatNumber;
     private String SeatType;
+    private Long roomId;
 
     public SeatResponse(Seat seat) {
         this.SeatId = seat.getSeatID();
         this.SeatStatus = seat.getSeatStatus();
         this.SeatNumber = seat.getSeatNumber();
         this.SeatType = seat.getSeatType();
+        this.roomId = seat.getRoom().getRoomID();
     }
 }
