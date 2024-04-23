@@ -5,11 +5,14 @@ import com.project.cinemamanagement.MyResponse.MyResponse;
 import com.project.cinemamanagement.PayLoad.Response.MovieResponse;
 import com.project.cinemamanagement.Service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Date;
 
 @RestController
 @RequestMapping("/api/v1/movie")
@@ -47,5 +50,10 @@ public class MovieController {
     private ResponseEntity<MyResponse> deleteMovie(@PathVariable Long movieId){
         movieService.deleteMovie(movieId);
         return new ResponseEntity<MyResponse>(new MyResponse(null,"Delete movie successfully"),null,HttpStatus.OK);
+    }
+
+    @GetMapping("/date/{date}")
+    public ResponseEntity<MyResponse> getMovieByDate(@PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") Date date){
+        return new ResponseEntity<MyResponse>(new MyResponse(movieService.getMovieByDate(date),"Get movie by date"),null,HttpStatus.OK);
     }
 }

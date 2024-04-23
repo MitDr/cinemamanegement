@@ -53,6 +53,10 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth->auth.requestMatchers("/api/v1/auth/refresh").permitAll())
                 .authorizeHttpRequests(auth->auth.requestMatchers("/api/v1/auth/logout").permitAll())
                 .authorizeHttpRequests(auth->auth.requestMatchers("/api/v1/auth/refresh").permitAll())
+
+//                .authorizeHttpRequests(auth->auth.requestMatchers("/api/v1/movie").permitAll())
+//                .authorizeHttpRequests(auth->auth.requestMatchers("/api/v1/movie/**").permitAll())
+
                 .authorizeHttpRequests(auth->auth.requestMatchers("/send-email").permitAll())
                 .authorizeHttpRequests(auth -> auth.anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

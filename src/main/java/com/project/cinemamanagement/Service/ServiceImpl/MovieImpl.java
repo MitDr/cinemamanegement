@@ -4,9 +4,12 @@ import com.project.cinemamanagement.Entity.Movie;
 import com.project.cinemamanagement.Exception.DataNotFoundException;
 import com.project.cinemamanagement.Repository.MovieRepository;
 import com.project.cinemamanagement.Service.MovieService;
+import com.project.cinemamanagement.Specifications.MovieSpecifications;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -53,6 +56,17 @@ public class MovieImpl implements MovieService {
 
         movieRepository.delete(deleteMovie);
         return deleteMovie;
+    }
+
+    @Override
+    public List<Movie> getMovieByDate(Date date) {
+        Specification<Movie> spec = MovieSpecifications.GetMovieByDate(date);
+
+        List<Movie> movies = movieRepository.findAll(spec);
+        if (movies.isEmpty()) {
+            throw new DataNotFoundException("Movie not found");
+        }
+        return movies;
     }
 
 }
