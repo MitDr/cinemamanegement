@@ -36,7 +36,7 @@ public class ShowTime {
     @JoinColumn(name = "roomID")
     private Room room;
 
-    @OneToMany(mappedBy = "showTime")
+    @OneToMany(mappedBy = "showTime", cascade = CascadeType.ALL)
     private List<Ticket> ticket;
 
 

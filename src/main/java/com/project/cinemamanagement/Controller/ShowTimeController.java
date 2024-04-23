@@ -13,6 +13,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/api/v1/showtime")
 public class ShowTimeController {
     @Autowired
@@ -21,12 +22,12 @@ public class ShowTimeController {
     @GetMapping
 //    @PreAuthorize("hasAuthority('USER')")
     public ResponseEntity<MyResponse> getAllShowTime(){
-        return new ResponseEntity<MyResponse>(new MyResponse(showTimeService.getAllShowTime(),null),null,200);
+        return new ResponseEntity<MyResponse>(new MyResponse(showTimeService.getAllShowTime(),"get all show time"),null,200);
     }
 
     @GetMapping("/{showTimeId}")
     private ResponseEntity<MyResponse> getShowTimeById(@PathVariable Long showTimeId){
-        return new ResponseEntity<MyResponse>(new MyResponse(showTimeService.getShowTimeById(showTimeId),"get all show time"),null,200);
+        return new ResponseEntity<MyResponse>(new MyResponse(showTimeService.getShowTimeById(showTimeId),"get show time by id"),null,200);
     }
 
     @GetMapping("/movie")

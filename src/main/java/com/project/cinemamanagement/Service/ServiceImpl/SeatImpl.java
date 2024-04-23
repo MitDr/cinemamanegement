@@ -10,6 +10,9 @@ import com.project.cinemamanagement.Repository.SeatRepository;
 import com.project.cinemamanagement.Service.SeatService;
 import com.project.cinemamanagement.Specifications.SeatSpecifications;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +30,7 @@ public class SeatImpl implements SeatService {
         List<Seat> seatList = seatRepository.findAll();
         List<SeatResponse> seatResponseList = new ArrayList<>();
         for (Seat seat: seatList) {
-            seatResponseList.add(new SeatResponse(seat.getSeatID(), seat.getSeatStatus(), seat.getSeatNumber(), seat.getSeatType()));
+            seatResponseList.add(new SeatResponse(seat));
         }
         return seatResponseList;
     }
@@ -48,15 +51,23 @@ public class SeatImpl implements SeatService {
         seat.setRoom(temp);
         seatRepository.save(seat);
 
+        return new SeatResponse(seat);
+    }
 
-        return new SeatResponse(seat.getSeatID(), seat.getSeatStatus(), seat.getSeatNumber(), seat.getSeatType());
+    @Override
+    public Page<SeatResponse> getAllSeatPaging(int pageNumber, int pageSize) {
+
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        Page<Seat> page = seatRepository.findBySeatStatus(1, pageable);
+
+        return page.map(seat -> new SeatResponse(seat.getSeatID(), seat.getSeatStatus(), seat.getSeatNumber(), seat.getSeatType(), seat.getRoom().getRoomID()));
     }
 
     @Override
     public SeatResponse getSeatById(Long seatId) {
         Seat seat = seatRepository.findById(seatId).orElseThrow(() -> new DataNotFoundException("Seat not found"));
 
-        return new SeatResponse(seat.getSeatID(), seat.getSeatStatus(), seat.getSeatNumber(), seat.getSeatType());
+        return new SeatResponse(seat);
     }
 
     @Override
@@ -70,7 +81,7 @@ public class SeatImpl implements SeatService {
 
         seatRepository.save(tempSeat);
 
-        return new SeatResponse(tempSeat.getSeatID(), tempSeat.getSeatStatus(), tempSeat.getSeatNumber(), tempSeat.getSeatType());
+        return new SeatResponse(tempSeat);
     }
 
     @Override
@@ -78,7 +89,7 @@ public class SeatImpl implements SeatService {
         Seat temp = seatRepository.findById(seatId).orElseThrow(() -> new DataNotFoundException("Seat not found"));
         seatRepository.delete(temp);
 
-        return new SeatResponse(temp.getSeatID(), temp.getSeatStatus(), temp.getSeatNumber(), temp.getSeatType());
+        return new SeatResponse(temp);
     }
 
     @Override
@@ -124,14 +135,17 @@ public class SeatImpl implements SeatService {
             seatResponse.setSeatNumber(seat.getSeatNumber());
             seatResponse.setSeatType(seat.getSeatType());
             seatResponse.setSeatStatus(seat.getSeatStatus());
+            seatResponse.setSeatId(seat.getSeatID());
+            seatResponse.setRoomId(seat.getRoom().getRoomID());
             seatResponseList.add(seatResponse);
+
         }
         return seatResponseList;
     }
 
     @Override
-    public List<SeatResponse> getAllSeatbyShowtimeId(Long roomId) {
-        Specification<Seat> spec = SeatSpecifications.getAllSeatbyShowtimeId(roomId);
+    public List<SeatResponse> getAllSeatbyShowtimeId(Long showtimeId) {
+        Specification<Seat> spec = SeatSpecifications.getAllSeatbyShowtimeId(showtimeId);
         List<Seat> seatList = seatRepository.findAll(spec);
         List<SeatResponse> seatResponseList = new ArrayList<>();
         for (Seat seat: seatList) {
@@ -139,6 +153,8 @@ public class SeatImpl implements SeatService {
             seatResponse.setSeatNumber(seat.getSeatNumber());
             seatResponse.setSeatType(seat.getSeatType());
             seatResponse.setSeatStatus(seat.getSeatStatus());
+            seatResponse.setSeatId(seat.getSeatID());
+            seatResponse.setRoomId(seat.getRoom().getRoomID());
             seatResponseList.add(seatResponse);
         }
         return seatResponseList;

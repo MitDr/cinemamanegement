@@ -1,6 +1,7 @@
 package com.project.cinemamanagement.Service;
 
 import com.project.cinemamanagement.Entity.User;
+import com.project.cinemamanagement.PayLoad.Request.RefreshRequest;
 import com.project.cinemamanagement.PayLoad.Request.UserRequest;
 import com.project.cinemamanagement.PayLoad.Response.UserResponse;
 import com.project.cinemamanagement.PayLoad.Response.UserTicketResponse;
@@ -14,14 +15,14 @@ public interface UserService {
 
     UserResponse getUserById(Long userId);
 
-    UserResponse updateUser(Long userId, User user);
+    UserResponse updateUser(Long userId, UserRequest user);
 
     UserResponse deleteUser(Long userId);
     void saveRefreshToken(String userName, String refreshToken);
 
-    User getUserByRefreshToken(String refreshToken);
+    UserResponse getUserByRefreshToken(RefreshRequest refreshToken);
 
     void deleteRefreshToken(String refreshToken);
-    User getUserByUserName(String userName);
+    UserResponse getUserByUserName(String userName);
     UserTicketResponse getUserTicketByUserName(Long userId);
 }

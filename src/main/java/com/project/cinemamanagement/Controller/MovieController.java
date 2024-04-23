@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/v1/movie")
 public class MovieController {
@@ -32,21 +33,18 @@ public class MovieController {
     }
 
     @PostMapping
-    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<MyResponse> addMovie(@RequestBody Movie movie){
         movieService.addMovie(movie);
         return new ResponseEntity<MyResponse>(new MyResponse(null,"Add new movie successfully"),null,HttpStatus.CREATED);
     }
 
     @PutMapping("/{movieId}")
-    @PreAuthorize("hasAuthority('ADMIN')")
     private ResponseEntity<MyResponse> updateMovie(@PathVariable Long movieId,@RequestBody Movie movie){
         movieService.updateMovie(movieId,movie);
         return new ResponseEntity<MyResponse>(new MyResponse(null,"Update movie successfully"),null,HttpStatus.OK);
     }
 
     @DeleteMapping("/{movieId}")
-    @PreAuthorize("hasAuthority('ADMIN')")
     private ResponseEntity<MyResponse> deleteMovie(@PathVariable Long movieId){
         movieService.deleteMovie(movieId);
         return new ResponseEntity<MyResponse>(new MyResponse(null,"Delete movie successfully"),null,HttpStatus.OK);

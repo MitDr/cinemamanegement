@@ -25,7 +25,7 @@ public class Room {
     @OneToMany(mappedBy = "room")
     private List<ShowTime> showTime;
 
-    @OneToMany(mappedBy = "room")
+    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
     private List<Seat> Seat;
 
     public void addSeatQuantity() {
