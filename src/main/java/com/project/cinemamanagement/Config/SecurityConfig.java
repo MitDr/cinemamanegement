@@ -66,6 +66,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth->auth.requestMatchers("/api/v1/showtime").permitAll())
                 .authorizeHttpRequests(auth->auth.requestMatchers("/api/v1/showtime/{showtimeId}").permitAll())
                 .authorizeHttpRequests(auth->auth.requestMatchers("/send-email").permitAll())
+                .authorizeHttpRequests(auth->auth.requestMatchers("/api/v1/seat/showtime/untakenseat/{showtimeId}").permitAll())
+                .authorizeHttpRequests(auth->auth.requestMatchers("/api/v1/seat/showtime/allseat/{showtimeId}").permitAll())
                 .authorizeHttpRequests(auth -> auth.anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider())
