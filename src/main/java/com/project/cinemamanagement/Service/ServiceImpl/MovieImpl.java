@@ -80,14 +80,19 @@ public class MovieImpl implements MovieService {
     }
 
     @Override
-    public List<Movie> getMovieByDate(Date date) {
+    public List<MovieResponse> getMovieByDate(Date date) {
         Specification<Movie> spec = MovieSpecifications.GetMovieByDate(date);
 
         List<Movie> movies = movieRepository.findAll(spec);
         if (movies.isEmpty()) {
             throw new DataNotFoundException("Movie not found");
         }
-        return movies;
+
+        List<MovieResponse> movieResponses = new ArrayList<>();
+        for (Movie movie: movies) {
+            movieResponses.add(new MovieResponse(movie));
+        }
+        return movieResponses;
     }
 
 }

@@ -14,5 +14,5 @@ public interface MovieService {
     MovieResponse updateMovie(Long movieId, Movie movie);
     MovieResponse deleteMovie(Long movieId);
     //List<MovieRequest> getMovieList();
-    List<Movie> getMovieByDate(Date date);
+    List<MovieResponse> getMovieByDate(Date date);
 }

@@ -4,6 +4,7 @@ import com.project.cinemamanagement.Entity.Movie;
 import com.project.cinemamanagement.MyResponse.MyResponse;
 import com.project.cinemamanagement.PayLoad.Response.MovieResponse;
 import com.project.cinemamanagement.Service.MovieService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -33,13 +34,13 @@ public class MovieController {
     }
 
     @PostMapping
-    public ResponseEntity<MyResponse> addMovie(@RequestBody Movie movie){
+    public ResponseEntity<MyResponse> addMovie(@Valid @RequestBody Movie movie){
         movieService.addMovie(movie);
         return new ResponseEntity<MyResponse>(new MyResponse(null,"Add new movie successfully"),null,HttpStatus.CREATED);
     }
 
     @PutMapping("/{movieId}")
-    private ResponseEntity<MyResponse> updateMovie(@PathVariable Long movieId,@RequestBody Movie movie){
+    private ResponseEntity<MyResponse> updateMovie(@PathVariable Long movieId,@Valid @RequestBody Movie movie){
         movieService.updateMovie(movieId,movie);
         return new ResponseEntity<MyResponse>(new MyResponse(null,"Update movie successfully"),null,HttpStatus.OK);
     }

@@ -32,7 +32,7 @@ public class UserImpl implements UserService {
         List<User> userList = userRepository.findAll();
         List<UserResponse> userResponses = new ArrayList<>();
         for (User user : userList) {
-            userResponses.add(new UserResponse(user.getUserName(), user.getFullName(), user.getEmail(), user.getPhone(), user.getAddress(), user.getRole()));
+            userResponses.add(new UserResponse(user.getUserId(),user.getUserName(), user.getFullName(), user.getEmail(), user.getPhone(), user.getAddress(), user.getRole()));
         }
         return userResponses;
     }
@@ -52,13 +52,13 @@ public class UserImpl implements UserService {
             user.setPassWord(encoder.encode(userRequest.getPassWord()));
         }
         userRepository.save(user);
-        return new UserResponse(user.getUserName(), user.getFullName(), user.getEmail(), user.getPhone(), user.getAddress(),user.getRole());
+        return new UserResponse(user.getUserId(),user.getUserName(), user.getFullName(), user.getEmail(), user.getPhone(), user.getAddress(),user.getRole());
     }
 
     @Override
     public UserResponse getUserById(Long userId) {
         User user =  userRepository.findById(userId).orElseThrow(() -> new DataNotFoundException("User not found"));
-        return new UserResponse(user.getUserName(), user.getFullName(), user.getEmail(), user.getPhone(), user.getAddress(),user.getRole());
+        return new UserResponse(user.getUserId(), user.getUserName(), user.getFullName(), user.getEmail(), user.getPhone(), user.getAddress(),user.getRole());
     }
 
     @Override
@@ -72,14 +72,14 @@ public class UserImpl implements UserService {
         updateUser.setFullName(user.getFullName());
 
         userRepository.save(updateUser);
-        return new UserResponse(updateUser.getUserName(), updateUser.getFullName(), updateUser.getEmail(), updateUser.getPhone(), updateUser.getAddress(),updateUser.getRole());
+        return new UserResponse(updateUser.getUserId() ,updateUser.getUserName(), updateUser.getFullName(), updateUser.getEmail(), updateUser.getPhone(), updateUser.getAddress(),updateUser.getRole());
     }
 
     @Override
     public UserResponse deleteUser(Long userId) {
         User deleteUser = userRepository.findById(userId).orElseThrow(() -> new DataNotFoundException("User not found"));
         userRepository.delete(deleteUser);
-        return new UserResponse(deleteUser.getUserName(), deleteUser.getFullName(), deleteUser.getEmail(), deleteUser.getPhone(), deleteUser.getAddress(), deleteUser.getRole());
+        return new UserResponse(deleteUser.getUserId(),deleteUser.getUserName(), deleteUser.getFullName(), deleteUser.getEmail(), deleteUser.getPhone(), deleteUser.getAddress(), deleteUser.getRole());
     }
 
     @Override
@@ -95,7 +95,7 @@ public class UserImpl implements UserService {
         if(user == null){
             throw new DataNotFoundException("There is no such refresh token");
         }
-        return new UserResponse(user.getUserName(), user.getFullName(), user.getEmail(), user.getPhone(), user.getAddress(),user.getRole());
+        return new UserResponse(user.getUserId() ,user.getUserName(), user.getFullName(), user.getEmail(), user.getPhone(), user.getAddress(),user.getRole());
     }
 
     @Override
@@ -108,7 +108,7 @@ public class UserImpl implements UserService {
     @Override
     public UserResponse getUserByUserName(String userName) {
         User user =  userRepository.findByUserName(userName);
-        return new UserResponse(user.getUserName(), user.getFullName(), user.getEmail(), user.getPhone(), user.getAddress(),user.getRole());
+        return new UserResponse(user.getUserId() ,user.getUserName(), user.getFullName(), user.getEmail(), user.getPhone(), user.getAddress(),user.getRole());
 
     }
 

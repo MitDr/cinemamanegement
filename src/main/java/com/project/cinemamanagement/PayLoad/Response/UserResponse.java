@@ -17,6 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserResponse {
+    private Long userId;
     private String userName;
     private String fullName;
     private String email;
