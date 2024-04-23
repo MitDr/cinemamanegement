@@ -6,6 +6,7 @@ import com.project.cinemamanagement.Exception.DataNotFoundException;
 import com.project.cinemamanagement.MyResponse.MyResponse;
 import com.project.cinemamanagement.MyResponse.TokenResponse;
 import com.project.cinemamanagement.PayLoad.Request.AuthRequest;
+import com.project.cinemamanagement.PayLoad.Request.RefreshRequest;
 import com.project.cinemamanagement.PayLoad.Request.UserRequest;
 import com.project.cinemamanagement.PayLoad.Response.UserResponse;
 import com.project.cinemamanagement.Provider.CustomAuthentication;
@@ -71,7 +72,7 @@ public class LoginController {
     }
 
     @PostMapping("/refresh")
-    private ResponseEntity<TokenResponse> refreshToken(@RequestBody String refreshToken){
+    private ResponseEntity<TokenResponse> refreshToken(@RequestBody RefreshRequest refreshToken){
         UserResponse user = userService.getUserByRefreshToken(refreshToken);
         String accessToken = jwtService.generateToken(user.getUserName());
         String newRefreshToken = jwtService.generateRefreshToken(user.getUserName());
@@ -80,9 +81,9 @@ public class LoginController {
     }
 
     @PostMapping("/logout")
-    private ResponseEntity<MyResponse> logout(@RequestBody String refreshToken){
+    private ResponseEntity<MyResponse> logout(@RequestBody RefreshRequest refreshToken){
         UserResponse user = userService.getUserByRefreshToken(refreshToken);
-        userService.deleteRefreshToken(refreshToken);
+        userService.deleteRefreshToken(refreshToken.getRefreshToken());
         return new ResponseEntity<MyResponse>(new MyResponse(null,"logout sucessfully"),HttpStatus.OK);
 
     }

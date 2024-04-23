@@ -3,6 +3,7 @@ package com.project.cinemamanagement.Service.ServiceImpl;
 import com.project.cinemamanagement.Entity.User;
 import com.project.cinemamanagement.Exception.DataFoundException;
 import com.project.cinemamanagement.Exception.DataNotFoundException;
+import com.project.cinemamanagement.PayLoad.Request.RefreshRequest;
 import com.project.cinemamanagement.PayLoad.Request.UserRequest;
 import com.project.cinemamanagement.PayLoad.Response.TicketResponse;
 import com.project.cinemamanagement.PayLoad.Response.UserResponse;
@@ -89,8 +90,8 @@ public class UserImpl implements UserService {
     }
 
     @Override
-    public UserResponse getUserByRefreshToken(String refreshToken) {
-        User user = userRepository.findByRefreshToken(refreshToken);
+    public UserResponse getUserByRefreshToken(RefreshRequest refreshToken) {
+        User user = userRepository.findByRefreshToken(refreshToken.getRefreshToken());
         if(user == null){
             throw new DataNotFoundException("There is no such refresh token");
         }
