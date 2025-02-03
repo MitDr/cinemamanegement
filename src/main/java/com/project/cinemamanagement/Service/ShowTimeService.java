@@ -18,4 +18,5 @@ public interface ShowTimeService {
     ShowtimeResponse updateShowTime(Long showTimeId, ShowtimeRequest showTime);
     List<ShowtimeResponse> getAllShowTime();
     List<ShowtimeResponse> getShowTimeByMovieId(Long movie);
+    void addShowTimeList(List<ShowtimeRequest> showTimeList, Movie movie);
 }

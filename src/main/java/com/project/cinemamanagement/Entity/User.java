@@ -1,10 +1,9 @@
 package com.project.cinemamanagement.Entity;
 
 import com.project.cinemamanagement.Enum.ROLE;
+import com.project.cinemamanagement.PayLoad.Response.TicketResponse;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -16,12 +15,13 @@ import java.util.Set;
 @Table(name = "tbl_user")
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder(toBuilder = true)
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private long userId;
-    @Column(name = "user_username")
+    @Column(name = "user_username", unique = true)
     private String userName;
     @Column(name = "user_password")
     private String passWord;
@@ -38,6 +38,11 @@ public class User {
     private ROLE role = ROLE.USER;
     @Column(name = "user_refresh_token")
     private String refreshToken;
-    @OneToMany(mappedBy = "user")
-    private List<Ticket> ticket = new ArrayList<>();
+    @Column(name = "user_verified")
+    private boolean verified = false;
+    @ToString.Exclude
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Payment> payments;
+
+
 }

@@ -1,83 +1,101 @@
 package com.project.cinemamanagement.Controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.project.cinemamanagement.Entity.Movie;
+import com.project.cinemamanagement.MyResponse.ErrorResponse;
 import com.project.cinemamanagement.MyResponse.MyResponse;
+import com.project.cinemamanagement.PayLoad.Request.MovieRequest;
+import com.project.cinemamanagement.PayLoad.Request.MovieShowtimeRequest;
 import com.project.cinemamanagement.PayLoad.Response.MovieResponse;
 import com.project.cinemamanagement.Service.MovieService;
+import com.project.cinemamanagement.Ultility.Validator;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+import java.util.Date;
+import java.util.Objects;
+
+@CrossOrigin(origins = "${frontend.endpoint}")
 @RestController
-@RequestMapping("/api/v1/movie")
+@RequestMapping("/api/v1")
 public class MovieController {
+
     @Autowired
     private MovieService movieService;
 
 
-    @GetMapping
-
-//    @PreAuthorize("hasAuthority('USER')")
-    public ResponseEntity<MyResponse> getAllMovie(){
-        return new ResponseEntity<MyResponse>(new MyResponse(movieService.getAllMovie(),null),null,200);
+    @GetMapping("/public/movies")
+    public ResponseEntity<MyResponse> getAllMovie() {
+        return new ResponseEntity<MyResponse>(new MyResponse(movieService.getAllMovie(), "Get all movie"), null, 200);
     }
 
-    @GetMapping("/{movieId}")
-    public ResponseEntity<MyResponse> getMovieById(@PathVariable Long movieId){
-        try{
-            return new ResponseEntity<MyResponse>(new MyResponse(movieService.getMovieById(movieId),null),null, HttpStatus.OK);
-        }
-        catch (Exception e){
-            return new ResponseEntity<MyResponse>(new MyResponse(e.getMessage(),null),null,HttpStatus.NOT_FOUND);
-        }
+    @GetMapping("/public/movies/{movieId}")
+    public ResponseEntity<MyResponse> getMovieById(@PathVariable Long movieId) {
+        return new ResponseEntity<MyResponse>(new MyResponse(movieService.getMovieById(movieId), "Movie with id: " + " " + movieId + " is get"), null, HttpStatus.OK);
     }
 
-    @PostMapping
-    @PreAuthorize("hasAuthority('USER')")
-    public ResponseEntity<MyResponse> addMovie(@RequestBody Movie movie){
-        return new ResponseEntity<MyResponse>(new MyResponse(movieService.addMovie(movie),null),null,HttpStatus.CREATED);
+    @PostMapping(consumes = "multipart/form-data", value = "/admin/movies")
+    public ResponseEntity<?> addMovie(@Valid @ModelAttribute MovieRequest movieRequest, BindingResult bindingResult) throws IOException {
+        if (bindingResult.hasErrors()) {
+            System.out.println("Validation errors:");
+            bindingResult.getFieldErrors().forEach(error -> {
+                System.out.println(error.getField() + ": " + error.getDefaultMessage());
+            });
+            return new ResponseEntity<ErrorResponse>(new ErrorResponse(Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage(), HttpStatus.BAD_REQUEST.value()), null, HttpStatus.BAD_REQUEST);
+        }
+        if (movieRequest.getImage() != null && !Validator.isValidFile(movieRequest.getImage())) {
+            return new ResponseEntity<ErrorResponse>(new ErrorResponse("Image is not valid", HttpStatus.BAD_REQUEST.value()), null, HttpStatus.BAD_REQUEST);
+        }
+        movieService.addMovie(movieRequest);
+        return new ResponseEntity<MyResponse>(new MyResponse(null, "Add new movie successfully"), null, HttpStatus.CREATED);
     }
 
-    @PutMapping("/{movieId}")
-    private ResponseEntity<MyResponse> updateMovie(@PathVariable Long movieId,@RequestBody Movie movie){
-        try{
-            return new ResponseEntity<MyResponse>(new MyResponse(movieService.updateMovie(movieId,movie),null),null,HttpStatus.OK);
-        }
-        catch (Exception e){
-            return new ResponseEntity<MyResponse>(new MyResponse(e.getMessage(),null),null,HttpStatus.NOT_FOUND);
-        }
-    }
-
-    @DeleteMapping("/{movieId}")
-    private ResponseEntity<MyResponse> deleteMovie(@PathVariable Long movieId){
-        try{
-            return new ResponseEntity<MyResponse>(new MyResponse(movieService.deleteMovie(movieId),null),null,HttpStatus.OK);
-        }
-        catch (Exception e){
-            return new ResponseEntity<>(new MyResponse(e.getMessage(),null),null,HttpStatus.NOT_FOUND);
-        }
-    }
-// Payload if needed
-//    @GetMapping("/payload")
-//    private ResponseEntity<?> getMovieList(){
-//        return new ResponseEntity<>(movieService.getMovieList(),null,HttpStatus.OK);
+//    @PutMapping("/{movieId}")
+//    private ResponseEntity<MyResponse> updateMovie(@PathVariable Long movieId,@Valid @RequestBody MovieRequest movie){
+//        movieService.updateMovie(movieId,movie);
+//        return new ResponseEntity<MyResponse>(new MyResponse(null,"Update movie successfully"),null,HttpStatus.OK);
 //    }
-//
-//    @PutMapping("/payload/{movieId}")
-//    private ResponseEntity<?> updateMovieStatus(@PathVariable Long movieId, @RequestBody MovieResponse movieResponse){
-//        try{
-//            Movie updateMovie = movieService.getMovieById(movieId);
-//            updateMovie.setStatus(movieResponse.getStatus());
-//            updateMovie.setReleaseDate(movieResponse.getReleaseDate());
-//            updateMovie.setEndDate(movieResponse.getEndDate());
-//            updateMovie.setAgeRestriction(movieResponse.getAgeRestriction());
-//            return new ResponseEntity<>(movieService.updateMovie(movieId,updateMovie),null,HttpStatus.OK);
+
+    @PutMapping("/admin/movies/{movieId}")
+    public ResponseEntity<?> updateMovie(@Valid @ModelAttribute MovieRequest movieRequest, BindingResult bindingResult, @PathVariable Long movieId) throws IOException {
+        if (bindingResult.hasErrors()) {
+            return new ResponseEntity<ErrorResponse>(new ErrorResponse(Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage(), HttpStatus.BAD_REQUEST.value()), null, HttpStatus.BAD_REQUEST);
+        }
+        if (!movieRequest.getImage().isEmpty() && !Validator.isValidFile(movieRequest.getImage())) {
+            return new ResponseEntity<ErrorResponse>(new ErrorResponse("Image is not valid", HttpStatus.BAD_REQUEST.value()), null, HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<MyResponse>(new MyResponse(movieService.updateMovie(movieId, movieRequest), "Update movie successfully"), null, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/admin/movies/{movieId}")
+    private ResponseEntity<MyResponse> deleteMovie(@PathVariable Long movieId) throws IOException {
+        movieService.deleteMovie(movieId);
+        return new ResponseEntity<MyResponse>(new MyResponse(null, "Delete movie successfully"), null, HttpStatus.OK);
+    }
+
+    @GetMapping("/public/movies/date")
+    public ResponseEntity<MyResponse> getMovieByDate(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date date) {
+        return new ResponseEntity<MyResponse>(new MyResponse(movieService.getMovieByDate(date), "Get movie by date"), null, HttpStatus.OK);
+    }
+
+    //WIP
+//    @PostMapping(value = "/showtime", consumes = "multipart/form-data")
+//    public ResponseEntity<?> addMovieShowtime(@Valid @ModelAttribute MovieShowtimeRequest movieShowtimeRequest, BindingResult bindingResult) throws JsonProcessingException {
+//        if (bindingResult.hasErrors()) {
+//            return new ResponseEntity<ErrorResponse>(new ErrorResponse(Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage(), HttpStatus.BAD_REQUEST.value()), null, HttpStatus.BAD_REQUEST);
 //        }
-//        catch (Exception e){
-//            return new ResponseEntity<>(e.getMessage(),null,HttpStatus.NOT_FOUND);
+//        if (!Validator.isValidFile(movieShowtimeRequest.getImage())) {
+//            return new ResponseEntity<ErrorResponse>(new ErrorResponse("Image is not valid", HttpStatus.BAD_REQUEST.value()), null, HttpStatus.BAD_REQUEST);
 //        }
+//        movieService.addMovieShowtime(movieShowtimeRequest);
+//        return new ResponseEntity<>(new MyResponse(null, "Add new movie showtime successfully"), null, HttpStatus.OK);
 //    }
 }
