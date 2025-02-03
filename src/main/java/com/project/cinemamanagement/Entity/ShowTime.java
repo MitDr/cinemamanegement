@@ -1,17 +1,20 @@
 package com.project.cinemamanagement.Entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.project.cinemamanagement.PayLoad.Request.ShowtimeRequest;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.Date;
 import java.util.List;
 
 @Entity
 @Data
-@Table(name = "tbl_ShowTime")
+@Table(name = "tbl_showtime")
 @AllArgsConstructor
 @NoArgsConstructor
 public class ShowTime {
@@ -25,13 +28,16 @@ public class ShowTime {
     @Column(name ="show_time_time_end")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private Date timeEnd;
-    @Column(name ="show_time_status")
-    private int status;
 
+    @Column(name = "show_time_price")
+    private Long price;
+
+    @ToString.Exclude
     @ManyToOne
     @JoinColumn(name = "movie_Id")
     private Movie movie;
 
+    @ToString.Exclude
     @ManyToOne
     @JoinColumn(name = "roomID")
     private Room room;
@@ -40,4 +46,7 @@ public class ShowTime {
     private List<Ticket> ticket;
 
 
+    public ShowTime(ShowtimeRequest showtimeRequest){
+
+    }
 }

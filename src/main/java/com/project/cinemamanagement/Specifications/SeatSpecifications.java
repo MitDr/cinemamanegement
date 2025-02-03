@@ -34,6 +34,15 @@ public class SeatSpecifications {
             return finalPredicate;
         });
     }
+
+    public static Specification<Seat> getTakenSeat(Long showTimeID){
+        return ((root, query, criteriaBuilder) -> {
+
+            Join<Seat,Ticket> ticketJoin = root.join("ticketList");
+
+            return criteriaBuilder.equal(ticketJoin.get("showTime").get("showTimeId"), showTimeID);
+        });
+    }
     public static Specification<Seat> getAllSeatbyShowtimeId(Long showtimeId){
         return ((root, query, criteriaBuilder) -> {
             Join<Seat, Room> roomJoin = root.join("room");
@@ -46,4 +55,5 @@ public class SeatSpecifications {
             return finalPredicate;
         });
     }
+
 }

@@ -2,11 +2,12 @@ package com.project.cinemamanagement.Service;
 
 import com.project.cinemamanagement.PayLoad.Request.TicketRequest;
 import com.project.cinemamanagement.PayLoad.Response.TicketResponse;
+import com.stripe.exception.StripeException;
 
 import java.util.List;
 
 public interface TicketService {
-    List<TicketResponse> addTicket(TicketRequest ticket);
+    String addTicket(TicketRequest ticket) throws StripeException;
 
     TicketResponse getTicketById(Long ticketId);
 

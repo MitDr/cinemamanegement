@@ -1,38 +1,42 @@
 package com.project.cinemamanagement.Controller;
 
-import com.project.cinemamanagement.Entity.Room;
 import com.project.cinemamanagement.MyResponse.MyResponse;
+import com.project.cinemamanagement.PayLoad.Request.RoomRequest;
 import com.project.cinemamanagement.Service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
-@RequestMapping("/api/v1/room")
+@CrossOrigin(origins = "${frontend.endpoint}")
+@RequestMapping("/api/v1")
 public class RoomController {
     @Autowired
     RoomService roomService;
 
-    @GetMapping
+    @GetMapping("/admin/rooms")
     private ResponseEntity<MyResponse> getAllRoom() {
-        return new ResponseEntity<MyResponse>(new MyResponse(roomService.getAllRoom(),"Get all room"), null, 200);
+        return new ResponseEntity<MyResponse>(new MyResponse(roomService.getAllRoom(), "Get all room"), null, 200);
     }
-    @GetMapping("/{roomId}")
+
+    @GetMapping("/public/rooms/{roomId}")
     private ResponseEntity<MyResponse> getRoomByRoomId(@PathVariable Long roomId) {
-        return new ResponseEntity<MyResponse>(new MyResponse(roomService.getRoomByRoomId(roomId),"Get room by room id"), null, 200);
+        return new ResponseEntity<MyResponse>(new MyResponse(roomService.getRoomByRoomId(roomId), "Get room by room id"), null, 200);
     }
-    @PostMapping
-    private ResponseEntity<MyResponse> addRoom(@RequestBody Room room) {
-        roomService.addRoom(room);
+
+    @PostMapping("/admin/rooms")
+    private ResponseEntity<MyResponse> addRoom(@RequestBody RoomRequest roomRequest) {
+        roomService.addRoom(roomRequest);
         return new ResponseEntity<MyResponse>(new MyResponse(null, "Add new room successfully"), null, 200);
     }
-    @PutMapping("/{roomId}")
-    private ResponseEntity<MyResponse> updateRoom(@PathVariable Long roomId, @RequestBody Room room) {
-        roomService.updateRoom(roomId, room);
+
+    @PutMapping("/admin/rooms/{roomId}")
+    private ResponseEntity<MyResponse> updateRoom(@PathVariable Long roomId, @RequestBody RoomRequest roomRequest) {
+        roomService.updateRoom(roomId, roomRequest);
         return new ResponseEntity<MyResponse>(new MyResponse(null, "Update room successfully"), null, 200);
     }
-    @DeleteMapping("/{roomId}")
+
+    @DeleteMapping("/admin/rooms/{roomId}")
     private ResponseEntity<MyResponse> deleteRoom(@PathVariable Long roomId) {
         roomService.deleteRoom(roomId);
         return new ResponseEntity<MyResponse>(new MyResponse(null, "Delete room successfully"), null, 200);

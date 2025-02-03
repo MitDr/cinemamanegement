@@ -16,7 +16,7 @@ public class MovieResponse {
     private String movieName;
     private String movieGenre;
     private String description;
-    private String duration;
+    private int duration;
     private String director;
     private String actor;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
@@ -40,7 +40,10 @@ public class MovieResponse {
         this.endDate = movie.getEndDate();
         this.ageRestriction = movie.getAgeRestriction();
         this.urlTrailer = movie.getUrlTrailer();
-        this.status = movie.getStatus();
         this.urlThumbnail = movie.getUrlThumbnail();
+        if(movie.getReleaseDate().after(new Date()) && movie.getEndDate().after(new Date())) this.status = 0;
+        else if (movie.getEndDate().before(new Date()) && movie.getReleaseDate().before(new Date())){
+            this.status = 2;
+        }else this.status = 1;
     }
 }

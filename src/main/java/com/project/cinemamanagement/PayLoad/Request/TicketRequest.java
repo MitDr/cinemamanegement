@@ -1,10 +1,12 @@
 package com.project.cinemamanagement.PayLoad.Request;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.checkerframework.checker.regex.qual.Regex;
+import org.checkerframework.common.value.qual.MatchesRegex;
 
 import java.util.Date;
 
@@ -12,15 +14,16 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TicketRequest {
-    @NotBlank(message = "price must not be blank")
-    private Long price;
-    @NotBlank(message = "seatLocation must not be blank")
+    @NotNull(message = "seatLocation must not be null")
+    @Size(min = 1, message = "seatLocation must contain at least one element")
     private String[] seatLocation;
-    @NotBlank(message = "date must not be blank")
+    @NotNull(message = "date must not be blank")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    @NotNull
     private Date date;
-    @NotBlank(message = "showtimeId must not be blank")
+    @Positive(message = "showtimeId is incorrect")
     private Long showtimeId;
-    @NotBlank(message = "userId must not be blank")
+    @Positive(message = "showtimeId is incorrect")
     private Long userId;
+
 }

@@ -1,6 +1,7 @@
 package com.project.cinemamanagement.Service;
 
 import com.project.cinemamanagement.Entity.Room;
+import com.project.cinemamanagement.PayLoad.Request.RoomRequest;
 import com.project.cinemamanagement.PayLoad.Response.RoomResponse;
 
 import java.util.List;
@@ -11,9 +12,9 @@ public interface RoomService {
 
     RoomResponse getRoomByRoomId(Long roomId);
 
-    RoomResponse addRoom(Room room);
+    void addRoom(RoomRequest roomRequest);
 
-    RoomResponse updateRoom(Long roomId, Room room);
+    void updateRoom(Long roomId, RoomRequest roomRequest);
 
-    RoomResponse deleteRoom(Long roomId);
+    void deleteRoom(Long roomId);
 }

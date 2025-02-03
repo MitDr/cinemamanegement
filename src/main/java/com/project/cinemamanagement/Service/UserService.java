@@ -1,10 +1,12 @@
 package com.project.cinemamanagement.Service;
 
 import com.project.cinemamanagement.Entity.User;
-import com.project.cinemamanagement.PayLoad.Request.RefreshRequest;
-import com.project.cinemamanagement.PayLoad.Request.UserRequest;
+import com.project.cinemamanagement.PayLoad.Request.*;
+import com.project.cinemamanagement.PayLoad.Response.AuthResponse;
 import com.project.cinemamanagement.PayLoad.Response.UserResponse;
 import com.project.cinemamanagement.PayLoad.Response.UserTicketResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import java.util.List;
 
@@ -24,5 +26,12 @@ public interface UserService {
 
     void deleteRefreshToken(String refreshToken);
     UserResponse getUserByUserName(String userName);
-    UserTicketResponse getUserTicketByUserName(Long userId);
+    AuthResponse loginUser(AuthRequest authRequest, HttpServletResponse response) throws Exception;
+    UserTicketResponse getUserTicketByUserName(String userName);
+
+    void logout(HttpServletRequest request, HttpServletResponse response);
+
+    void forgotPassword(VerficationRequest VerifyRequest, HttpServletRequest request);
+
+    void verifyAndChangePassword(PasswordRequest passwordRequest);
 }

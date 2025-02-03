@@ -19,15 +19,16 @@ public interface JwtService {
     String createToken(Map<String, Object> claims, String userName);
 
     Key getSignKey();
-    String extractUsername(String token);
+    String extractUsername(String token,int type);
 
-    Date extractExpiration(String token);
+    Date extractExpiration(String token,int type);
 
-    <T> T extractClaim(String token, Function<Claims,T> claimsResolver);
+    <T> T extractClaim(String token, Function<Claims,T> claimsResolver,int type);
 
-    Claims extractAllClaims(String token);
+    Claims extractAllClaims(String token,int type);
 
-    Boolean isTokenExpired(String token);
+    Boolean isTokenExpired(String token,int type);
 
     Boolean validateToken(String token, UserDetails userDetails);
+    Boolean isCorrectTokenExpired(String token, UserDetails userDetails);
 }

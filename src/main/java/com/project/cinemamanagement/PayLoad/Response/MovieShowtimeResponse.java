@@ -21,7 +21,7 @@ public class MovieShowtimeResponse {
     private String movieName;
     private String movieGenre;
     private String description;
-    private String duration;
+    private int duration;
     private String director;
     private String actor;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
@@ -47,7 +47,6 @@ public class MovieShowtimeResponse {
         this.endDate = movie.getEndDate();
         this.ageRestriction = movie.getAgeRestriction();
         this.urlTrailer = movie.getUrlTrailer();
-        this.status = movie.getStatus();
         this.urlThumbnail = movie.getUrlThumbnail();
         this.showTimes = showTimes;
     }

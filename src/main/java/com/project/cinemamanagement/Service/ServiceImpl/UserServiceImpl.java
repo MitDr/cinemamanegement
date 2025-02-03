@@ -18,13 +18,10 @@ public class UserServiceImpl implements UserDetailsService {
     UserRepository userRepository;
     @Override
     public UserDetails loadUserByUsername(String username){
-//            Optional<User> user = userRepository.findByUserName(username);
+            Optional<User> user = userRepository.findByUserName(username);
 //            return user.map(UserDetailImpl::new).orElseThrow(() -> new UsernameNotFoundException("User not found"));
            // Kiểm tra xem user có tồn tại trong database không?
-        User user = userRepository.findByUserName(username);
-        if (user == null) {
-            return null;
-        }
-        return new UserDetailImpl(user);
+//        User user = userRepository.findByUserName(username).orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        return user.map(UserDetailImpl::new).orElse(null);
     }
 }

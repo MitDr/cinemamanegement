@@ -1,6 +1,8 @@
 package com.project.cinemamanagement.PayLoad.Response;
 
+import com.project.cinemamanagement.Enum.SEATSTAT;
 import com.project.cinemamanagement.Entity.Seat;
+import com.project.cinemamanagement.Enum.SEATTYPE;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,9 +12,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class SeatResponse {
     private Long SeatId;
-    private int SeatStatus;
+    private SEATSTAT SeatStatus;
     private String SeatNumber;
-    private String SeatType;
+    private SEATTYPE SeatType;
     private Long roomId;
 
     public SeatResponse(Seat seat) {
@@ -20,6 +22,8 @@ public class SeatResponse {
         this.SeatStatus = seat.getSeatStatus();
         this.SeatNumber = seat.getSeatNumber();
         this.SeatType = seat.getSeatType();
-        this.roomId = seat.getRoom().getRoomID();
+        if (seat.getRoom() != null){
+            this.roomId = seat.getRoom().getRoomID();
+        }else this.roomId = null;
     }
 }
