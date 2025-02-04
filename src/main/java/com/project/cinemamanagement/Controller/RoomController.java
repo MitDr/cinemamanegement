@@ -15,7 +15,7 @@ public class RoomController {
 
     private final RoomService roomService;
 
-    @GetMapping("/admin/rooms")
+    @GetMapping("/public/rooms")
     private ResponseEntity<MyResponse> getAllRoom() {
         return new ResponseEntity<MyResponse>(new MyResponse(roomService.getAllRoom(), "Get all room"), null, 200);
     }

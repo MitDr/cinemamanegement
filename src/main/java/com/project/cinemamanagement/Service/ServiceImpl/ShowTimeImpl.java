@@ -11,10 +11,12 @@ import com.project.cinemamanagement.PayLoad.Response.ShowtimeResponse;
 import com.project.cinemamanagement.Repository.MovieRepository;
 import com.project.cinemamanagement.Repository.RoomRepository;
 import com.project.cinemamanagement.Repository.ShowTimeRepository;
+import com.project.cinemamanagement.Service.BaseService;
 import com.project.cinemamanagement.Service.ShowTimeService;
 import com.project.cinemamanagement.Specifications.ShowtimeSpecifications;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -24,7 +26,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class ShowTimeImpl implements ShowTimeService {
+public class ShowTimeImpl extends BaseService<ShowTime, Long> implements ShowTimeService {
 
     private final ShowTimeRepository showTimeRepository;
 
@@ -35,7 +37,6 @@ public class ShowTimeImpl implements ShowTimeService {
     @Override
     public ShowtimeResponse addShowTime(ShowtimeRequest showTime) {
 
-        System.out.println(showTime.getTimeStart() + " " + showTime.getTimeEnd());
         Movie movie = movieRepository.findById(showTime.getMovieId()).orElseThrow(() -> new DataNotFoundException("Movie not found"));
 
         if(validateMovieTime(showTime, movie)){
@@ -101,7 +102,7 @@ public class ShowTimeImpl implements ShowTimeService {
 
     @Override
     public ShowtimeResponse getShowTimeById(Long showTimeId) {
-        ShowTime showTime = showTimeRepository.findById(showTimeId).orElseThrow(() -> new DataNotFoundException("ShowTime not found"));
+        ShowTime showTime = getById(showTimeId);
         return new ShowtimeResponse(showTime);
     }
 
@@ -150,7 +151,7 @@ public class ShowTimeImpl implements ShowTimeService {
 
     @Override
     public List<ShowtimeResponse> getAllShowTime() {
-        List<ShowTime> showTimeList = showTimeRepository.findAll();
+        List<ShowTime> showTimeList = getAll();
         List<ShowtimeResponse> showtimeResponseList = new ArrayList<>();
         for (ShowTime showTime: showTimeList) {
             ShowtimeResponse showtimeResponse = new ShowtimeResponse();
@@ -202,5 +203,10 @@ public class ShowTimeImpl implements ShowTimeService {
             showTimeList1.add(showTime1);
         }
         showTimeRepository.saveAll(showTimeList1);
+    }
+
+    @Override
+    protected JpaRepository<ShowTime, Long> getRepository() {
+        return showTimeRepository;
     }
 }

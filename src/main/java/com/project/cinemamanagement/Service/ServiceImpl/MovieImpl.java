@@ -19,6 +19,7 @@ import com.project.cinemamanagement.PayLoad.Response.MovieShowtimeResponse;
 import com.project.cinemamanagement.PayLoad.Response.ShowtimeResponse;
 import com.project.cinemamanagement.Repository.ImageRepository;
 import com.project.cinemamanagement.Repository.MovieRepository;
+import com.project.cinemamanagement.Service.BaseService;
 import com.project.cinemamanagement.Service.MovieService;
 import com.project.cinemamanagement.Service.ShowTimeService;
 import com.project.cinemamanagement.Specifications.MovieSpecifications;
@@ -26,6 +27,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -38,7 +40,7 @@ import java.util.*;
 
 @Service
 @RequiredArgsConstructor
-public class MovieImpl implements MovieService {
+public class MovieImpl extends BaseService<Movie, Long> implements MovieService {
 
     private final MovieRepository movieRepository;
 
@@ -113,7 +115,7 @@ public class MovieImpl implements MovieService {
 
     @Override
     public MovieShowtimeResponse getMovieById(Long movieId) {
-        Movie movie = movieRepository.findById(movieId).orElseThrow(() -> new DataNotFoundException("Movie not found"));
+        Movie movie = getById(movieId);
         List<ShowtimeResponse> showtimeResponseList = showTimeService.getShowTimeByMovieId(movieId);
         showtimeResponseList.removeIf(showtimeResponse -> showtimeResponse.getTimeEnd().before(new Date()));
         return new MovieShowtimeResponse(movie, showtimeResponseList);
@@ -121,7 +123,7 @@ public class MovieImpl implements MovieService {
 
     @Override
     public MovieResponse updateMovie(Long movieId, MovieRequest movie) throws IOException {
-        Movie updateMovie = movieRepository.findById(movieId).orElseThrow(() -> new DataNotFoundException("Movie not found"));
+        Movie updateMovie = getById(movieId);
         Optional<Image> image = imageRepository.findByUrl(updateMovie.getUrlThumbnail());
 
         if (isValidMovie(movie)) {
@@ -316,5 +318,10 @@ public class MovieImpl implements MovieService {
                 )
         );
         cloudinary.uploader().destroy(publicId, ObjectUtils.emptyMap());
+    }
+
+    @Override
+    protected JpaRepository<Movie, Long> getRepository() {
+        return movieRepository;
     }
 }

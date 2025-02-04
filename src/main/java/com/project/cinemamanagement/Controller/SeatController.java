@@ -22,8 +22,7 @@ public class SeatController {
     }
 
     @GetMapping("/admin/seats/paging")
-    private ResponseEntity<MyResponse> getAllSeatPaging(@RequestParam(value = "pageNumber", defaultValue = "0") int pageNumber,
-                                                        @RequestParam(value = "pageSize", defaultValue = "5") int pageSize) {
+    private ResponseEntity<MyResponse> getAllSeatPaging(@RequestParam(value = "pageNumber", defaultValue = "0") int pageNumber, @RequestParam(value = "pageSize", defaultValue = "5") int pageSize) {
         return new ResponseEntity<MyResponse>(new MyResponse(seatService.getAllSeatPaging(pageNumber, pageSize), "Get all seat paging"), null, 200);
     }
 

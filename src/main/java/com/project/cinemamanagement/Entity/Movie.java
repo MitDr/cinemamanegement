@@ -12,7 +12,7 @@ import java.util.List;
 
 @Entity
 @Data
-@Table(name ="tbl_movie" )
+@Table(name = "tbl_movie")
 @AllArgsConstructor
 @NoArgsConstructor
 public class Movie {
@@ -28,7 +28,7 @@ public class Movie {
     private String description;
     @Column(name = "move_duration")
     private int duration;
-    @Column(name = "movie_director" )
+    @Column(name = "movie_director")
     private String director;
     @Column(name = "movie_actor")
     private String actor;
@@ -63,7 +63,7 @@ public class Movie {
         this.urlThumbnail = builder.urlThumbnail;
     }
 
-    public static class Builder{
+    public static class Builder {
 
         private String movieName;
 
@@ -86,7 +86,9 @@ public class Movie {
         private String urlTrailer;
 
         private String urlThumbnail;
-        public Builder(){}
+
+        public Builder() {
+        }
 
         public Builder setMovieName(String movieName) {
             this.movieName = movieName;
@@ -143,7 +145,7 @@ public class Movie {
             return this;
         }
 
-        public Movie build(){
+        public Movie build() {
             return new Movie(this);
         }
     }

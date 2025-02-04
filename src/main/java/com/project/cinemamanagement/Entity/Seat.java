@@ -12,7 +12,7 @@ import java.util.List;
 
 @Entity
 @Data
-@Table(name = "tbl_seat",uniqueConstraints = @UniqueConstraint(columnNames = {"seatNumber","roomId"}))
+@Table(name = "tbl_seat", uniqueConstraints = @UniqueConstraint(columnNames = {"seatNumber", "roomId"}))
 @NoArgsConstructor
 @AllArgsConstructor
 public class Seat {
@@ -33,7 +33,7 @@ public class Seat {
     private Room room;
 
     @ToString.Exclude
-    @OneToMany(mappedBy = "seat",fetch = FetchType.LAZY, cascade = CascadeType.DETACH, orphanRemoval = false)
+    @OneToMany(mappedBy = "seat", fetch = FetchType.LAZY, cascade = CascadeType.DETACH, orphanRemoval = false)
     private List<Ticket> ticketList;
 
     @Transient
@@ -46,7 +46,7 @@ public class Seat {
 
     @PostPersist
     public void addSeatQuantity() {
-        if(this.room == null) return;
+        if (this.room == null) return;
         this.room.addSeatQuantity();
     }
 

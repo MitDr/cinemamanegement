@@ -6,7 +6,7 @@ import org.springframework.context.ApplicationEvent;
 
 @Getter
 public class OnRegistrationCompleteEvent extends ApplicationEvent {
-    private UserRequest user;
+    private final UserRequest user;
 
 
     public OnRegistrationCompleteEvent(Object source, UserRequest user) {

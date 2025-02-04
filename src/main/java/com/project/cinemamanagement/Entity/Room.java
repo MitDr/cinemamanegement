@@ -38,6 +38,7 @@ public class Room {
     public void addSeatQuantity() {
         this.seatQuantity++;
     }
+
     public void reduceSeatQuantity() {
         this.seatQuantity--;
     }
@@ -49,7 +50,7 @@ public class Room {
     }
 
     @PreRemove
-    public void preRemove(){
+    public void preRemove() {
         for (Seat seat : Seat) {
             seat.setRoom(null);
         }

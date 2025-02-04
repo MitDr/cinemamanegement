@@ -26,7 +26,7 @@ public class Payment {
     @Column(name = "payment_status")
     @Enumerated(EnumType.STRING)
     private PAYMENTSTAT paymentStatus;
-    @Column(name ="payment_session_id")
+    @Column(name = "payment_session_id")
     private String paymentSessionId;
     @Column(name = "payment_date")
     private Date paymentDate;
@@ -39,7 +39,7 @@ public class Payment {
     @OneToMany(mappedBy = "payment", cascade = CascadeType.ALL)
     private List<Ticket> ticket;
 
-    public Payment(PaymentRequest paymentRequest){
+    public Payment(PaymentRequest paymentRequest) {
         this.paymentMethod = paymentRequest.getPaymentMethod();
         this.paymentStatus = PAYMENTSTAT.valueOf(paymentRequest.getPaymentStatus());
         this.paymentDate = paymentRequest.getPaymentDate();

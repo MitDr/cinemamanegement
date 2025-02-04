@@ -21,10 +21,10 @@ public class ShowTime {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "show_time_Id")
     private Long showTimeId;
-    @Column(name ="show_time_time_start")
+    @Column(name = "show_time_time_start")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private Date timeStart;
-    @Column(name ="show_time_time_end")
+    @Column(name = "show_time_time_end")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private Date timeEnd;
 
@@ -45,7 +45,7 @@ public class ShowTime {
     private List<Ticket> ticket;
 
 
-    public ShowTime(ShowtimeRequest showtimeRequest){
+    public ShowTime(ShowtimeRequest showtimeRequest) {
 
     }
 }

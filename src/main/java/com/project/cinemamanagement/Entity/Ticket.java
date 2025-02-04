@@ -16,7 +16,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name="tbl_ticket", uniqueConstraints = @UniqueConstraint(columnNames = {"showtimeId","seatId"}))
+@Table(name = "tbl_ticket", uniqueConstraints = @UniqueConstraint(columnNames = {"showtimeId", "seatId"}))
 public class Ticket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

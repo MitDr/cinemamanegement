@@ -16,6 +16,7 @@ import com.project.cinemamanagement.Repository.RoomRepository;
 import com.project.cinemamanagement.Repository.SeatRepository;
 import com.project.cinemamanagement.Repository.ShowTimeRepository;
 import com.project.cinemamanagement.Repository.TicketRepository;
+import com.project.cinemamanagement.Service.BaseService;
 import com.project.cinemamanagement.Service.SeatService;
 import com.project.cinemamanagement.Specifications.SeatSpecifications;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -32,7 +34,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class SeatImpl implements SeatService {
+public class SeatImpl extends BaseService<Seat, Long> implements SeatService {
 
     private final SeatRepository seatRepository;
 
@@ -44,7 +46,7 @@ public class SeatImpl implements SeatService {
 
     @Override
     public List<SeatResponse> getAllSeat() {
-        List<Seat> seatList = seatRepository.findAll();
+        List<Seat> seatList = getAll();
         List<SeatResponse> seatResponseList = new ArrayList<>();
         for (Seat seat: seatList) {
             seatResponseList.add(new SeatResponse(seat));
@@ -73,7 +75,7 @@ public class SeatImpl implements SeatService {
             }
         }
         if(seatRequest.getSeatNumber().matches("^(1[0-9]|20|[1-9]([A-T]))$") && seatRequest.getSeatType()==SEATTYPE.SINGLE){
-            seatRepository.save(seat);
+            create(seat);
             return;
         }
         else
@@ -83,7 +85,7 @@ public class SeatImpl implements SeatService {
             if(seat2 - seat1 !=1){
                 throw new InvalidDataException("Seat information is incorrect.");
             }else{
-                seatRepository.save(seat);
+                create(seat);
                 return;
             }
         }else{
@@ -183,16 +185,14 @@ public class SeatImpl implements SeatService {
 
     @Override
     public SeatResponse getSeatById(Long seatId) {
-        Seat seat = seatRepository.findById(seatId).orElseThrow(() -> new DataNotFoundException("Seat not found"));
-
+        Seat seat = getById(seatId);
         return new SeatResponse(seat);
     }
 
 
     @Override
     public void updateSeat(Long seatId, SeatRequest seat) {
-        Seat existingSeat = seatRepository.findById(seatId)
-                .orElseThrow(() -> new DataNotFoundException("Seat not found"));
+        Seat existingSeat = getById(seatId);
         Optional<Room> room1 = Optional.empty();
         if(existingSeat.getRoom()!=null){
             room1 = roomRepository.findById(existingSeat.getRoom().getRoomID());
@@ -255,17 +255,13 @@ public class SeatImpl implements SeatService {
 
     @Override
     public void deleteSeat(Long seatId) {
-        Seat oldSeat = seatRepository.findById(seatId)
-                .orElseThrow(() -> new DataNotFoundException("Seat not found"));
-
-        seatRepository.delete(oldSeat);
+        delete(seatId);
     }
 
     @Override
     public List<SeatResponse> getAllSeatResponseByRoomType(String roomType) {
         Specification<Seat> spec = SeatSpecifications.getSeatByRoomType(roomType);
         List<Seat> seatList = seatRepository.findAll(spec);
-//        System.out.println(seatList.size());
         List<SeatResponse> seatResponseList = new ArrayList<>();
         return getSeatResponses(seatList, seatResponseList);
     }
@@ -349,4 +345,8 @@ public class SeatImpl implements SeatService {
     }
 
 
+    @Override
+    protected JpaRepository<Seat, Long> getRepository() {
+        return seatRepository;
+    }
 }
