@@ -1,7 +1,10 @@
 package com.project.cinemamanagement.Exception;
 
+import java.io.Serial;
+
 public class InvalidDataException extends  RuntimeException {
-    private static final  long serialVersionUID = 1L;
+    @Serial
+    private static final long serialVersionUID = 1L;
     public InvalidDataException(String message) {
         super(message);
     }

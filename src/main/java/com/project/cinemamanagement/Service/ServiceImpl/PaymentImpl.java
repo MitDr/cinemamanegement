@@ -25,6 +25,7 @@ import com.stripe.param.RefundCreateParams;
 import com.stripe.param.checkout.SessionCreateParams;
 import com.stripe.param.checkout.SessionExpireParams;
 import io.jsonwebtoken.security.Jwks;
+import lombok.RequiredArgsConstructor;
 import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
@@ -48,19 +49,16 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 @Service
+@RequiredArgsConstructor
 public class PaymentImpl implements PaymentService {
 
-    @Autowired
-    private PaymentRepository paymentRepository;
-    @Autowired
-    private TicketRepository ticketRepository;
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private ShowTimeRepository showTimeRepository;
+    private final PaymentRepository paymentRepository;
 
-    @Autowired
-    private EmailService emailService;
+    private final TicketRepository ticketRepository;
+
+    private final UserRepository userRepository;
+
+    private final EmailService emailService;
 
     @Override
     public String createPayment(PaymentInner paymentInner) throws StripeException {

@@ -20,6 +20,7 @@ import com.project.cinemamanagement.Repository.TicketRepository;
 import com.project.cinemamanagement.Service.SeatService;
 import com.project.cinemamanagement.Specifications.SeatSpecifications;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -33,15 +34,17 @@ import java.util.*;
 import java.util.concurrent.CompletableFuture;
 
 @Service
+@RequiredArgsConstructor
 public class SeatImpl implements SeatService {
-    @Autowired
-    SeatRepository seatRepository;
-    @Autowired
-    RoomRepository roomRepository;
-    @Autowired
-    ShowTimeRepository showTimeRepository;
-    @Autowired
-    TicketRepository ticketRepository;
+
+    private final SeatRepository seatRepository;
+
+    private final RoomRepository roomRepository;
+
+    private final ShowTimeRepository showTimeRepository;
+
+    private final TicketRepository ticketRepository;
+
     @Override
     public List<SeatResponse> getAllSeat() {
         List<Seat> seatList = seatRepository.findAll();

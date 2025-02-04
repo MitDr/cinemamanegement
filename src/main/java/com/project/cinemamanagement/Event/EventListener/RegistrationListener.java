@@ -9,6 +9,7 @@ import com.project.cinemamanagement.Repository.VerificationRepository;
 import com.project.cinemamanagement.Service.EmailService;
 import com.project.cinemamanagement.Service.JwtService;
 import com.project.cinemamanagement.Ultility.UUIDGenerator;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
@@ -16,15 +17,16 @@ import org.springframework.stereotype.Component;
 import java.util.UUID;
 
 @Component
+@RequiredArgsConstructor
 public class RegistrationListener implements ApplicationListener<OnRegistrationCompleteEvent> {
-    @Autowired
-    JwtService jwtService;
-    @Autowired
-    EmailService emailService;
-    @Autowired
-    VerificationRepository verificationRepository;
-    @Autowired
-    UserRepository userRepository;
+
+    private final JwtService jwtService;
+
+    private final EmailService emailService;
+
+    private final VerificationRepository verificationRepository;
+
+    private final UserRepository userRepository;
     @Override
     public void onApplicationEvent(OnRegistrationCompleteEvent event) {
         this.confirmRegistration(event);

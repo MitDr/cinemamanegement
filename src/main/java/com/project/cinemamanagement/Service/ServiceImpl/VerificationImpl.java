@@ -12,21 +12,23 @@ import com.project.cinemamanagement.Service.JwtService;
 import com.project.cinemamanagement.Service.VerificationService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 
 @Service
+@RequiredArgsConstructor
 public class VerificationImpl implements VerificationService {
-    @Autowired
-    UserRepository userRepository;
-    @Autowired
-    EmailService emailService;
-    @Autowired
-    JwtService jwtService;
-    @Autowired
-    VerificationRepository verificationRepository;
+
+    private final UserRepository userRepository;
+
+    private final EmailService emailService;
+
+    private final JwtService jwtService;
+
+    private final VerificationRepository verificationRepository;
     @Override
     public void sendEmail(VerficationRequest VerifyRequest, HttpServletRequest request) {
         User user = userRepository.findByEmail(VerifyRequest.getEmail()).orElseThrow(() -> new DataNotFoundException("User not found"));

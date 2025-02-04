@@ -18,6 +18,7 @@ import com.project.cinemamanagement.Service.PaymentService;
 import com.project.cinemamanagement.Service.TicketService;
 import com.project.cinemamanagement.Specifications.TicketSpecifications;
 import com.stripe.exception.StripeException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -28,17 +29,18 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class TicketImpl implements TicketService {
-    @Autowired
-    TicketRepository ticketRepository; ;
-    @Autowired
-    ShowTimeRepository showTimeRepository;
-    @Autowired
-    UserRepository userRepository;
-    @Autowired
-    SeatRepository seatRepository;
-    @Autowired
-    PaymentService paymentService;
+
+    private final TicketRepository ticketRepository; ;
+
+    private final ShowTimeRepository showTimeRepository;
+
+    private final UserRepository userRepository;
+
+    private final SeatRepository seatRepository;
+
+    private final PaymentService paymentService;
 
     @Override
     public String addTicket(TicketRequest ticket) throws StripeException {

@@ -49,11 +49,13 @@ public class RestResponseEntityExceptionHandler{
     public ResponseEntity<ErrorResponse> handleSignatureException(SignatureException ex) {
         return new ResponseEntity<ErrorResponse>(new ErrorResponse(ex.getMessage(),HttpStatus.UNAUTHORIZED.value()),null, HttpStatus.UNAUTHORIZED);
     }
+
     @ExceptionHandler(HttpMessageNotReadableException.class)
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     public ResponseEntity<ErrorResponse> handleHttpMessageNotReadableException(HttpMessageNotReadableException ex) {
         return new ResponseEntity<ErrorResponse>(new ErrorResponse("Request body is not valid",HttpStatus.BAD_REQUEST.value()),null, HttpStatus.BAD_REQUEST);
     }
+
     @ExceptionHandler(PSQLException.class)
     public ResponseEntity<ErrorResponse> handlePSQLException(PSQLException ex) {
         String errorMessage;
@@ -81,7 +83,6 @@ public class RestResponseEntityExceptionHandler{
 
         // Trả về lỗi chung nếu không xác định được
         return new ResponseEntity<>(new ErrorResponse(ex.getMessage(), HttpStatus.CONFLICT.value()), HttpStatus.INTERNAL_SERVER_ERROR);
-
     }
 
     @ExceptionHandler({DataNotFoundException.class})

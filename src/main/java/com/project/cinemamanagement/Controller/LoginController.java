@@ -17,6 +17,7 @@ import com.project.cinemamanagement.Service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
@@ -39,12 +40,12 @@ import java.util.Map;
 @CrossOrigin(origins = "${frontend.endpoint}")
 @RestController
 @RequestMapping("/api/v1/auth")
+@RequiredArgsConstructor
 public class LoginController {
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private EmailService emailService;
 
+    private final UserService userService;
+
+//    private final EmailService emailService;
 
     @PostMapping("/login")
     private ResponseEntity<MyResponse> authenticateAndGetToken(@Valid @RequestBody AuthRequest authRequest, HttpServletResponse response) throws Exception{

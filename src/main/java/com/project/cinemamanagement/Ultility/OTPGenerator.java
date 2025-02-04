@@ -1,5 +1,6 @@
 package com.project.cinemamanagement.Ultility;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CacheEvict;
@@ -10,9 +11,10 @@ import java.util.Objects;
 import java.util.Random;
 
 @Component
+@RequiredArgsConstructor
 public class OTPGenerator {
-    @Autowired
-    private CacheManager cacheManager;
+
+    private final CacheManager cacheManager;
 
     @Cacheable(value = "otp", key = "#email")
     public String generateOTP(String email) {

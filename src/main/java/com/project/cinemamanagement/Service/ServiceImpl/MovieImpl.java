@@ -22,6 +22,7 @@ import com.project.cinemamanagement.Repository.MovieRepository;
 import com.project.cinemamanagement.Service.MovieService;
 import com.project.cinemamanagement.Specifications.MovieSpecifications;
 import com.project.cinemamanagement.Service.ShowTimeService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,13 +38,14 @@ import java.nio.file.Paths;
 import java.util.*;
 
 @Service
+@RequiredArgsConstructor
 public class MovieImpl implements MovieService {
 
-    @Autowired
-    private MovieRepository movieRepository;
-    @Autowired
-    private ShowTimeService showTimeService;
+    private final MovieRepository movieRepository;
+
+    private final ShowTimeService showTimeService;
     private final String UPLOAD_DIR = System.getProperty("user.dir") + "/uploads";
+
     @Value("${cloudinary.cloud_name}")
     private String cloudName;
 
@@ -56,8 +58,8 @@ public class MovieImpl implements MovieService {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     private static final int MAX_RETRY = 3;
-    @Autowired
-    private ImageRepository imageRepository;
+
+    private final ImageRepository imageRepository;
 
     @Override
     public List<MovieResponse> getAllMovie() {
@@ -315,14 +317,5 @@ public class MovieImpl implements MovieService {
                 )
         );
         cloudinary.uploader().destroy(publicId, ObjectUtils.emptyMap());
-    }
-
-
-    public void testFormatCode(int a1, int a2) {
-        if (a1 == a2) {
-            System.out.println("a is equal to b");
-        } else {
-            System.out.println("a is not equal to b");
-        }
     }
 }

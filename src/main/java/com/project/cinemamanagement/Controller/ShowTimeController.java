@@ -7,6 +7,7 @@ import com.project.cinemamanagement.PayLoad.Request.ShowtimeRequest;
 import com.project.cinemamanagement.PayLoad.Response.ShowtimeResponse;
 import com.project.cinemamanagement.Service.MovieService;
 import com.project.cinemamanagement.Service.ShowTimeService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,9 +16,10 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @CrossOrigin(origins = "${frontend.endpoint}")
 @RequestMapping("/api/v1")
+@RequiredArgsConstructor
 public class ShowTimeController {
-    @Autowired
-    private ShowTimeService showTimeService;
+
+    private final ShowTimeService showTimeService;
 
     @GetMapping("/admin/showtimes")
     public ResponseEntity<MyResponse> getAllShowTime() {

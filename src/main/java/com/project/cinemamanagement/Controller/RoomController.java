@@ -3,6 +3,7 @@ package com.project.cinemamanagement.Controller;
 import com.project.cinemamanagement.MyResponse.MyResponse;
 import com.project.cinemamanagement.PayLoad.Request.RoomRequest;
 import com.project.cinemamanagement.Service.RoomService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,9 +11,10 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @CrossOrigin(origins = "${frontend.endpoint}")
 @RequestMapping("/api/v1")
+@RequiredArgsConstructor
 public class RoomController {
-    @Autowired
-    RoomService roomService;
+
+    private final RoomService roomService;
 
     @GetMapping("/admin/rooms")
     private ResponseEntity<MyResponse> getAllRoom() {

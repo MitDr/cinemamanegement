@@ -3,6 +3,7 @@ package com.project.cinemamanagement.Provider;
 import com.project.cinemamanagement.Entity.User;
 import com.project.cinemamanagement.Service.ServiceImpl.UserDetailImpl;
 import com.project.cinemamanagement.Service.ServiceImpl.UserServiceImpl;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -16,12 +17,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class CustomAuthentication implements AuthenticationProvider {
 
-    @Autowired
-    private UserServiceImpl userDetailsService;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final UserServiceImpl userDetailsService;
+
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {

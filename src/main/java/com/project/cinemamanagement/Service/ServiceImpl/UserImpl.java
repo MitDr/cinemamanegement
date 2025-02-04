@@ -21,6 +21,7 @@ import com.project.cinemamanagement.Ultility.OTPGenerator;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.CacheManager;
@@ -41,23 +42,24 @@ import java.util.Objects;
 import java.util.Random;
 
 @Service
+@RequiredArgsConstructor
 public class UserImpl implements UserService {
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private TicketService ticketService;
-    @Autowired
-    private PasswordEncoder encoder;
-    @Autowired
-    private JwtService jwtService;
-    @Autowired
-    AuthenticationManager authenticationManager;
-    @Autowired
-    private EmailService emailService;
-    @Autowired
-    ApplicationEventPublisher eventPublisher;
-    @Autowired
-    private OTPGenerator otpGenerator;
+
+    private final UserRepository userRepository;
+
+    private final TicketService ticketService;
+
+    private final PasswordEncoder encoder;
+
+    private final JwtService jwtService;
+
+    private final AuthenticationManager authenticationManager;
+
+    private final EmailService emailService;
+
+    private final ApplicationEventPublisher eventPublisher;
+
+    private final OTPGenerator otpGenerator;
 
     @Value("${jwt.cookieExpiration}")
     private Long cookieExpiration;

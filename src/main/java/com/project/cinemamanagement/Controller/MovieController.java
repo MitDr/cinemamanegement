@@ -10,6 +10,7 @@ import com.project.cinemamanagement.PayLoad.Response.MovieResponse;
 import com.project.cinemamanagement.Service.MovieService;
 import com.project.cinemamanagement.Ultility.Validator;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -26,11 +27,10 @@ import java.util.Objects;
 @CrossOrigin(origins = "${frontend.endpoint}")
 @RestController
 @RequestMapping("/api/v1")
+@RequiredArgsConstructor
 public class MovieController {
 
-    @Autowired
-    private MovieService movieService;
-
+    private final MovieService movieService;
 
     @GetMapping("/public/movies")
     public ResponseEntity<MyResponse> getAllMovie() {

@@ -4,6 +4,7 @@ import com.project.cinemamanagement.MyResponse.MyResponse;
 import com.project.cinemamanagement.PayLoad.Request.SeatRequest;
 import com.project.cinemamanagement.Service.SeatService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,9 +15,10 @@ import java.time.Instant;
 @RestController
 @CrossOrigin(origins = "${frontend.endpoint}")
 @RequestMapping("/api/v1")
+@RequiredArgsConstructor
 public class SeatController {
-    @Autowired
-    SeatService seatService;
+
+    private final SeatService seatService;
 
     @GetMapping("/admin/seats")
     private ResponseEntity<MyResponse> getAllSeat() {

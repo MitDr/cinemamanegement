@@ -10,6 +10,7 @@ import com.stripe.param.checkout.SessionCreateParams;
 import com.stripe.param.checkout.SessionExpireParams;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,10 +21,10 @@ import java.text.ParseException;
 @RestController
 @RequestMapping("/api/v1")
 @CrossOrigin(origins = "${frontend.endpoint}")
+@RequiredArgsConstructor
 public class PaymentController {
 
-    @Autowired
-    private PaymentService paymentService;
+    private final PaymentService paymentService;
 
     @GetMapping("/admin/payments")
     public ResponseEntity<?> getAllPayment() {

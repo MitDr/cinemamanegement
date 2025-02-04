@@ -8,6 +8,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,19 +22,21 @@ import java.util.function.Function;
 
 
 @Service
+@RequiredArgsConstructor
 public class JwtImpl implements JwtService {
     @Value("${jwt.secret}")
     public String SECRET ;
+
     @Value("${jwt.secret2}")
     public String SECRETREF ;
 
     @Value("${jwt.accessexpiration}")
     private Long accessTokenExpiration;
+
     @Value("${jwt.refreshtokenexpiration}")
     private Long refreshTokenExpiration;
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
     @Override
     public String generateToken(String userName) {
         Map<String, Object> claims = new HashMap<>();

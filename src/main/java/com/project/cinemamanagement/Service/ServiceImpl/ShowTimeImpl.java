@@ -13,6 +13,7 @@ import com.project.cinemamanagement.Repository.RoomRepository;
 import com.project.cinemamanagement.Repository.ShowTimeRepository;
 import com.project.cinemamanagement.Service.ShowTimeService;
 import com.project.cinemamanagement.Specifications.ShowtimeSpecifications;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -20,13 +21,14 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 @Service
+@RequiredArgsConstructor
 public class ShowTimeImpl implements ShowTimeService {
-    @Autowired
-    ShowTimeRepository showTimeRepository;
-    @Autowired
-    MovieRepository movieRepository;
-    @Autowired
-    RoomRepository roomRepository;
+
+    private final ShowTimeRepository showTimeRepository;
+
+    private final MovieRepository movieRepository;
+
+    private final RoomRepository roomRepository;
 
     @Override
     public ShowtimeResponse addShowTime(ShowtimeRequest showTime) {
