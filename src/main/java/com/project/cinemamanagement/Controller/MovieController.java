@@ -1,22 +1,15 @@
 package com.project.cinemamanagement.Controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.project.cinemamanagement.Entity.Movie;
 import com.project.cinemamanagement.MyResponse.ErrorResponse;
 import com.project.cinemamanagement.MyResponse.MyResponse;
 import com.project.cinemamanagement.PayLoad.Request.MovieRequest;
-import com.project.cinemamanagement.PayLoad.Request.MovieShowtimeRequest;
-import com.project.cinemamanagement.PayLoad.Response.MovieResponse;
 import com.project.cinemamanagement.Service.MovieService;
 import com.project.cinemamanagement.Ultility.Validator;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PostAuthorize;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 

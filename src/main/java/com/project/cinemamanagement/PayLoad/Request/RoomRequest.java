@@ -2,15 +2,11 @@ package com.project.cinemamanagement.PayLoad.Request;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.project.cinemamanagement.Enum.ROOMSTAT;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.checkerframework.checker.regex.qual.Regex;
 
 @Data
 @AllArgsConstructor

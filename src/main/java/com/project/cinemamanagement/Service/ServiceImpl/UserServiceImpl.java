@@ -1,14 +1,10 @@
 package com.project.cinemamanagement.Service.ServiceImpl;
 
 import com.project.cinemamanagement.Entity.User;
-import com.project.cinemamanagement.Exception.DataNotFoundException;
-import com.project.cinemamanagement.Exception.DataRequiredException;
 import com.project.cinemamanagement.Repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;

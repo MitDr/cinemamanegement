@@ -1,14 +1,10 @@
 package com.project.cinemamanagement.Entity;
 
 import com.project.cinemamanagement.Enum.ROLE;
-import com.project.cinemamanagement.PayLoad.Response.TicketResponse;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Data

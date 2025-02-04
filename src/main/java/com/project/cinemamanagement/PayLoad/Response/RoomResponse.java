@@ -2,7 +2,6 @@ package com.project.cinemamanagement.PayLoad.Response;
 
 import com.project.cinemamanagement.Entity.Room;
 import com.project.cinemamanagement.Enum.ROOMSTAT;
-import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

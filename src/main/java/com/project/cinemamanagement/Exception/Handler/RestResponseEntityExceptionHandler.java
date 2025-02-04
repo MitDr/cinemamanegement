@@ -2,15 +2,11 @@ package com.project.cinemamanagement.Exception.Handler;
 
 import com.project.cinemamanagement.Exception.*;
 import com.project.cinemamanagement.MyResponse.ErrorResponse;
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.validation.UnexpectedTypeException;
 import org.postgresql.util.PSQLException;
-
-import com.project.cinemamanagement.MyResponse.MyResponse;
-import io.jsonwebtoken.ExpiredJwtException;
-import lombok.val;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -19,12 +15,9 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.security.SignatureException;
 import java.util.HashMap;

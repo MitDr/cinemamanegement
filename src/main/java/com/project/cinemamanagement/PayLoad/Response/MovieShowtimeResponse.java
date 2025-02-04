@@ -2,10 +2,6 @@ package com.project.cinemamanagement.PayLoad.Response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.project.cinemamanagement.Entity.Movie;
-import com.project.cinemamanagement.Entity.ShowTime;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

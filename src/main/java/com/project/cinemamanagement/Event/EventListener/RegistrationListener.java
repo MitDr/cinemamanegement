@@ -10,7 +10,6 @@ import com.project.cinemamanagement.Service.EmailService;
 import com.project.cinemamanagement.Service.JwtService;
 import com.project.cinemamanagement.Ultility.UUIDGenerator;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 

@@ -1,6 +1,5 @@
 package com.project.cinemamanagement.Repository;
 
-import com.project.cinemamanagement.Entity.Movie;
 import com.project.cinemamanagement.Entity.ShowTime;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;

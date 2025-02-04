@@ -1,7 +1,6 @@
 package com.project.cinemamanagement.PayLoad.Response;
 
 import com.project.cinemamanagement.Entity.Seat;
-import com.project.cinemamanagement.Enum.SEATSTAT;
 import com.project.cinemamanagement.Enum.SEATTYPE;
 import lombok.AllArgsConstructor;
 import lombok.Data;

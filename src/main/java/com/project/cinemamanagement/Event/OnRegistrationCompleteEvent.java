@@ -1,6 +1,5 @@
 package com.project.cinemamanagement.Event;
 
-import com.project.cinemamanagement.Entity.User;
 import com.project.cinemamanagement.PayLoad.Request.UserRequest;
 import lombok.Getter;
 import org.springframework.context.ApplicationEvent;

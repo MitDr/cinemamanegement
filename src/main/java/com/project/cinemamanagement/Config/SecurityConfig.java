@@ -5,7 +5,6 @@ import com.project.cinemamanagement.Custom.CustomAuthenticationEntryPoint;
 import com.project.cinemamanagement.Filter.JwtAuthFilter;
 import com.project.cinemamanagement.Service.ServiceImpl.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;

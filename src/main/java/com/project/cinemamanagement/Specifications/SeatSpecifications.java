@@ -4,7 +4,10 @@ import com.project.cinemamanagement.Entity.Room;
 import com.project.cinemamanagement.Entity.Seat;
 import com.project.cinemamanagement.Entity.ShowTime;
 import com.project.cinemamanagement.Entity.Ticket;
-import jakarta.persistence.criteria.*;
+import jakarta.persistence.criteria.Join;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
+import jakarta.persistence.criteria.Subquery;
 import org.springframework.data.jpa.domain.Specification;
 
 public class SeatSpecifications {

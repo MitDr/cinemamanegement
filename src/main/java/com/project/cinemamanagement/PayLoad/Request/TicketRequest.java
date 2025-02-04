@@ -1,12 +1,12 @@
 package com.project.cinemamanagement.PayLoad.Request;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.checkerframework.checker.regex.qual.Regex;
-import org.checkerframework.common.value.qual.MatchesRegex;
 
 import java.util.Date;
 

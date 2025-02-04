@@ -1,24 +1,15 @@
 package com.project.cinemamanagement.Controller;
 
-import com.project.cinemamanagement.Entity.User;
 import com.project.cinemamanagement.MyResponse.MyResponse;
-import com.project.cinemamanagement.PayLoad.Request.AuthRequest;
 import com.project.cinemamanagement.PayLoad.Request.PasswordRequest;
 import com.project.cinemamanagement.PayLoad.Request.UserRequest;
 import com.project.cinemamanagement.PayLoad.Request.VerficationRequest;
-import com.project.cinemamanagement.Service.JwtService;
 import com.project.cinemamanagement.Service.UserService;
 import com.project.cinemamanagement.Service.VerificationService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

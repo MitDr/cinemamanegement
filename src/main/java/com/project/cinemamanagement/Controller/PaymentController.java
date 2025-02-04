@@ -5,13 +5,9 @@ import com.project.cinemamanagement.PayLoad.Request.PaymentRequest;
 import com.project.cinemamanagement.PayLoad.Request.RevenueRequest;
 import com.project.cinemamanagement.Service.PaymentService;
 import com.stripe.exception.StripeException;
-import com.stripe.model.checkout.Session;
-import com.stripe.param.checkout.SessionCreateParams;
-import com.stripe.param.checkout.SessionExpireParams;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

@@ -14,11 +14,13 @@ import com.project.cinemamanagement.Repository.ShowTimeRepository;
 import com.project.cinemamanagement.Service.ShowTimeService;
 import com.project.cinemamanagement.Specifications.ShowtimeSpecifications;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor

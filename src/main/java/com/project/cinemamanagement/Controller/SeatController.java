@@ -5,12 +5,8 @@ import com.project.cinemamanagement.PayLoad.Request.SeatRequest;
 import com.project.cinemamanagement.Service.SeatService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.Duration;
-import java.time.Instant;
 
 @RestController
 @CrossOrigin(origins = "${frontend.endpoint}")

@@ -2,10 +2,8 @@ package com.project.cinemamanagement.Specifications;
 
 import com.project.cinemamanagement.Entity.Payment;
 import com.project.cinemamanagement.Entity.Ticket;
-import com.project.cinemamanagement.Entity.User;
 import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.Predicate;
-import jakarta.persistence.criteria.Subquery;
 import org.springframework.data.jpa.domain.Specification;
 
 public class TicketSpecifications {

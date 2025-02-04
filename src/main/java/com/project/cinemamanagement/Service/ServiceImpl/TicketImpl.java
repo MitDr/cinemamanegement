@@ -19,12 +19,13 @@ import com.project.cinemamanagement.Service.TicketService;
 import com.project.cinemamanagement.Specifications.TicketSpecifications;
 import com.stripe.exception.StripeException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 

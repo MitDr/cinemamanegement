@@ -1,6 +1,5 @@
 package com.project.cinemamanagement.Entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.cinemamanagement.Enum.SEATSTAT;
 import com.project.cinemamanagement.Enum.SEATTYPE;
 import jakarta.persistence.*;

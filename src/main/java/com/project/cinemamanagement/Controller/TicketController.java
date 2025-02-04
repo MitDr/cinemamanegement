@@ -1,26 +1,14 @@
 package com.project.cinemamanagement.Controller;
 
-import com.project.cinemamanagement.Entity.Movie;
-import com.project.cinemamanagement.Entity.Room;
-import com.project.cinemamanagement.Entity.Seat;
-import com.project.cinemamanagement.Entity.User;
-import com.project.cinemamanagement.Exception.DataFoundException;
-import com.project.cinemamanagement.Exception.DataNotFoundException;
 import com.project.cinemamanagement.MyResponse.MyResponse;
 import com.project.cinemamanagement.PayLoad.Request.TicketRequest;
-import com.project.cinemamanagement.PayLoad.Response.*;
-import com.project.cinemamanagement.Service.*;
+import com.project.cinemamanagement.Service.TicketService;
 import com.stripe.exception.StripeException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "${frontend.endpoint}")

@@ -1,16 +1,10 @@
 package com.project.cinemamanagement.Controller;
 
-import com.project.cinemamanagement.Entity.Movie;
-import com.project.cinemamanagement.Entity.ShowTime;
 import com.project.cinemamanagement.MyResponse.MyResponse;
 import com.project.cinemamanagement.PayLoad.Request.ShowtimeRequest;
-import com.project.cinemamanagement.PayLoad.Response.ShowtimeResponse;
-import com.project.cinemamanagement.Service.MovieService;
 import com.project.cinemamanagement.Service.ShowTimeService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

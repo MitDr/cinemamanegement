@@ -1,6 +1,5 @@
 package com.project.cinemamanagement.Service.ServiceImpl;
 
-import ch.qos.logback.core.encoder.EchoEncoder;
 import com.project.cinemamanagement.Entity.Room;
 import com.project.cinemamanagement.Entity.Seat;
 import com.project.cinemamanagement.Entity.ShowTime;
@@ -19,19 +18,17 @@ import com.project.cinemamanagement.Repository.ShowTimeRepository;
 import com.project.cinemamanagement.Repository.TicketRepository;
 import com.project.cinemamanagement.Service.SeatService;
 import com.project.cinemamanagement.Specifications.SeatSpecifications;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
-import java.util.concurrent.CompletableFuture;
+import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

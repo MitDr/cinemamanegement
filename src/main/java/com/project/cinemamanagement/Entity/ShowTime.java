@@ -1,7 +1,6 @@
 package com.project.cinemamanagement.Entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.cinemamanagement.PayLoad.Request.ShowtimeRequest;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

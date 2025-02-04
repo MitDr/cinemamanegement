@@ -1,11 +1,8 @@
 package com.project.cinemamanagement.Entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.project.cinemamanagement.Enum.PAYMENTSTAT;
 import com.project.cinemamanagement.PayLoad.Request.PaymentRequest;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.FutureOrPresent;
-import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

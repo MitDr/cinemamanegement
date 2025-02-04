@@ -6,7 +6,6 @@ import com.project.cinemamanagement.PayLoad.Response.RoomResponse;
 import com.project.cinemamanagement.Repository.RoomRepository;
 import com.project.cinemamanagement.Service.RoomService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
